@@ -91,6 +91,7 @@ ALTER TABLE testdb.Aluno ADD
         FOREIGN KEY (usuario_id) 
         REFERENCES testdb.Usuario (id);
 
+
 ALTER TABLE testdb.Tarefa ADD
      CONSTRAINT fk_turma_Tarefa 
       FOREIGN KEY (turma_id) 
