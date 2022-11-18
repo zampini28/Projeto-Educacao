@@ -28,8 +28,6 @@ CREATE TABLE IF NOT EXISTS testdb.Responsavel (
   usuario_id        INT(11)         NOT NULL,
   matricula_id      VARCHAR(255)    NOT NULL,
   PRIMARY KEY (id)
-  
- 
 );
 
 CREATE TABLE IF NOT EXISTS testdb.Aluno (
@@ -83,3 +81,8 @@ ALTER TABLE testdb.Aluno ADD
     CONSTRAINT fk_usuario_aluno 
         FOREIGN KEY (usuario_id) 
         REFERENCES testdb.Usuario (id);
+
+ALTER TABLE testdb.Tarefa ADD
+     CONSTRAINT fk_turma_Tarefa 
+      FOREIGN KEY (turma_id) 
+      REFERENCES testdb.Turma (id);
