@@ -22,26 +22,26 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 <table>
   <tr>
     <td align="center">
-      <a href="#nome-do-projeto">
+      <a href="#projeto-educação">
           <b>Adson Henrique Costa</b>
       </a>
     </td>
     <td align="center">
-      <a href="#nome-do-projeto">
+      <a href="#projeto-educação">
           <b>Caio Martins Zampini</b>
       </a>
     </td>
     <td align="center">
-      <a href="#nome-do-projeto">
+      <a href="#projeto-educação">
           <b>João Paulo</b>
       </a>
     </td>
     <td align="center">
-      <a href="#nome-do-projeto">
+      <a href="#projeto-educação">
         <b>Virgilio Ranielli Policate dos Santos</b>
       </a>
     </td>
   </tr>
 </table>
 
-[⬆ Voltar ao topo](#nome-do-projeto)<br>
+[⬆ Voltar ao topo](#projeto-educação)<br>
