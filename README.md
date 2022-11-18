@@ -23,26 +23,22 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
   <tr>
     <td align="center">
       <a href="#">
-        <br>
           <b>Adson Henrique Costa</b>
       </a>
     </td>
     <td align="center">
       <a href="#">
-        <br>
           <b>Caio Martins Zampini</b>
       </a>
     </td>
     <td align="center">
       <a href="#">
-        <br>
           <b>João Paulo</b>
       </a>
     </td>
     <td align="center">
       <a href="#">
-        <br>
-          <b>Virgilio Ranielli Policate dos Santos</b>
+        <b>Virgilio Ranielli Policate dos Santos</b>
       </a>
     </td>
   </tr>
