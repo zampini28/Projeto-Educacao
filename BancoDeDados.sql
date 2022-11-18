@@ -41,6 +41,16 @@ CREATE TABLE IF NOT EXISTS testdb.Aluno (
   PRIMARY KEY (id)
 );
  
+CREATE TABLE IF NOT EXISTS testdb.Tarefa (
+  id        INT(11)       NOT NULL  AUTO_INCREMENT,
+  titulo    VARCHAR(255)  NOT NULL,
+  situacao  BOOLEAN       NOT NULL DEFAULT 0,
+  prazo     DATE          NOT NULL,
+  notaMax   FLOAT         NOT NULL,
+  nota      FLOAT         DEFAULT NULL,
+  turma_id  INT(11)       NOT NULL,
+  PRIMARY KEY (id)
+);
 
 ALTER TABLE testdb.Administrador ADD 
     CONSTRAINT fk_usuario_administrador 
