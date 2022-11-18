@@ -1,13 +1,19 @@
+#--------------------------
+# Start setup
+#--------------------------
 DROP SCHEMA IF EXISTS testdb;
 CREATE SCHEMA IF NOT EXISTS testdb;
 USE testdb ;
  
+#--------------------------
+# Creating tables
+#--------------------------
 CREATE TABLE IF NOT EXISTS testdb.Usuario (
   id            INT(11)         NOT NULL    AUTO_INCREMENT,
   nome          VARCHAR(255)    NOT NULL,
-  rg            VARCHAR(9)      NOT NULL,
-  cpf           VARCHAR(11)     NOT NULL,
-  n_telefone    VARCHAR(13)     NULL        DEFAULT NULL,
+  rg            VARCHAR(255)    NOT NULL,
+  cpf           VARCHAR(255)    NOT NULL,
+  n_telefone    VARCHAR(255)    NULL        DEFAULT NULL,
   email         VARCHAR(255)    NOT NULL,
   usuario       VARCHAR(30)     NOT NULL,
   nascimento    DATE            NOT NULL,
@@ -16,7 +22,7 @@ CREATE TABLE IF NOT EXISTS testdb.Usuario (
   senha         INT(11)         NOT NULL,
   PRIMARY KEY (id)
 );
- 
+
 CREATE TABLE IF NOT EXISTS testdb.Administrador (
   id                INT(11)     NOT NULL    AUTO_INCREMENT,
   usuario_id        INT(11)     NOT NULL,
@@ -50,6 +56,9 @@ CREATE TABLE IF NOT EXISTS testdb.Tarefa (
   PRIMARY KEY (id)
 );
 
+#--------------------------
+# Adding foreign key
+#--------------------------
 ALTER TABLE testdb.Administrador ADD 
     CONSTRAINT fk_usuario_administrador 
         FOREIGN KEY (usuario_id) 
