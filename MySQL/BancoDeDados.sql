@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS testdb.Administrador (
   usuario_id        INT(11)     NOT NULL,
   PRIMARY KEY (id)
 );
- 
+
 CREATE TABLE IF NOT EXISTS testdb.Responsavel (
   id                INT(11)         NOT NULL    AUTO_INCREMENT,
   usuario_id        INT(11)         NOT NULL,
@@ -43,18 +43,7 @@ CREATE TABLE IF NOT EXISTS testdb.Aluno (
   responsavel_id    INT(11)         NOT NULL,
   usuario_id        INT(11)         NOT NULL,
   PRIMARY KEY (id)
-);
- 
-CREATE TABLE IF NOT EXISTS testdb.Tarefa (
-  id        INT(11)       NOT NULL  AUTO_INCREMENT,
-  titulo    VARCHAR(255)  NOT NULL,
-  situacao  BOOLEAN       NOT NULL DEFAULT 0,
-  prazo     DATE          NOT NULL,
-  notaMax   FLOAT         NOT NULL,
-  nota      FLOAT         DEFAULT NULL,
-  turma_id  INT(11)       NOT NULL,
-  PRIMARY KEY (id)
-);
+); 
 
 #--------------------------
 # Adding foreign key
@@ -90,9 +79,3 @@ ALTER TABLE testdb.Aluno ADD
     CONSTRAINT fk_usuario_aluno 
         FOREIGN KEY (usuario_id) 
         REFERENCES testdb.Usuario (id);
-
-
-ALTER TABLE testdb.Tarefa ADD
-     CONSTRAINT fk_turma_Tarefa 
-      FOREIGN KEY (turma_id) 
-      REFERENCES testdb.Turma (id);
