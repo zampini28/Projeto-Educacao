@@ -16,23 +16,33 @@ We believe that everyone—educators and learners at every age and stage—deser
  -- Privacidade e segurança
 
 Privacidade & Segurança
-O Projeto Educação está comprometido em constriur um sistema que ajudam estudantes e professores a proteger sua privacidades. Oferecendo a melhor segurança para sua instituição. Você pode confiar no serviço do Projeto Educação em continuamente proteger seus usuários, dispositivos, e dados de ameaças cada vez mais complexas.
+O Projeto Educação está comprometido em construir um sistema que ajudam estudantes e professores a proteger sua privacidades. Oferecendo a melhor segurança para sua instituição. Você pode confiar no serviço do Projeto Educação em continuamente proteger seus usuários, dispositivos, e dados de ameaças cada vez mais complexas.
 
 Privacy & Security Center
 Google is committed to building products that help protect student and teacher privacy and provide best-in-class security for your institution. You can trust that Google for Education products and services continuously protect users, devices, and data from increasingly complex threats.
 
  -- Acessibilidade
 
+Acessibilidade para todo mundo
+Quando todos os estudantes podem participar plenamente da experiência de aprendizagem na forma mais adequeada, todos se beneficiam. Pensando isso, criamos o Projeto Educação com foco em desenvolver um sistema de alta acessibilidade, para ajudar todos os estudantes a aprender e alcançar o potencial máximo deles.
+
 Accessibility for every student
 When all students can fully participate in the learning experience in their own way, everyone benefits. That's why we create Google for Education products with accessibility in mind, to help every student learn, be inspired, and achieve their full potential.
 
  -- Melhor customização para sua instituição
+
+Melhor customização para sua instituição 
+Seja totalmente virtual, totalmente presencial ou intermediário, o Projeto Educação possui as melhores ferramentas e recursos para personalizar e entregar um plano que seja a melhor opção para sua instituição e para seus estudantes.
 
 Explore tools that enable teaching and learning from anywhere
 Whether fully virtual, fully in-person or something in between, explore resources to help you customize a plan that’s best for your school, and for your students.
 
 
 - Como começar
+
+Como começar a usar o sistema do Projeto Educação em sua instituição
+Estamos a disposição para ajuda-lo em cada passo dessa jornada, deste o planejamento até o treinamento e muito mais. Obtenha treinamento e suporte com tudo o que necessita sempre que precisar, independente se você tenha uma pergunta específica, um problema para resolver ou queira saber mais sobre o que o sistema do Projeto Educação são capaz de realizar, estamos aqui para te atender!
+
 
 Partners expand possibilities
 Google for Education partners offer sales, training, deployment, and technology solutions related to our products including Chromebooks, Chrome Education Upgrade, and Google Workspace for Education. Connect with a partner to get products and services that can help transform teaching and learning at your institution.
@@ -42,5 +52,3 @@ We’re here for you every step of the way, from planning to training and everyt
 
 Get training and support with anything you need
 Whether you have a specific question, an issue to troubleshoot, or want to learn more about what Google for Education products can do, we’re here to help.
-
-
