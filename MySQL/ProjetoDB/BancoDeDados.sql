@@ -65,18 +65,33 @@ CREATE TABLE IF NOT EXISTS testdb.FAQ (
     id                  INT         NOT NULL    AUTO_INCREMENT,
     autor_usuario_id    INT         NOT NULL,
     conteudo            TEXT        NOT NULL,
-    data                DATETIME    NOT NULL    DEFAULT CURRENT_TIMESTAMP(),
+    `data`              DATETIME    NOT NULL    DEFAULT CURRENT_TIMESTAMP(),
     TURMA_ID            INT         NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS testdb.Tarefa (
-    id      INT             NOT NULL    AUTO_INCREMENT,
-    titulo  VARCHAR(255)    NOT NULL,
-    status  TINYINT         NOT NULL    DEFAULT 0,
-    prazo   DATETIME        NOT NULL,
-    notaMax DOUBLE          NOT NULL    DEFAULT 10,
-    nota    DOUBLE          NULL        DEFAULT NULL,
-    turma   INT             NOT NULL,
+    id          INT             NOT NULL    AUTO_INCREMENT,
+    titulo      VARCHAR(255)    NOT NULL,
+    `status`    TINYINT         NOT NULL    DEFAULT 0,
+    prazo       DATETIME        NOT NULL,
+    notaMax     DOUBLE          NOT NULL    DEFAULT 10,
+    nota        DOUBLE          NULL        DEFAULT NULL,
+    turma       INT             NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS testdb.Feedback (
+    id          INT             NOT NULL    AUTO_INCREMENT,
+    titulo      VARCHAR(255)    NOT NULL,
+    `data`      DATETIME        NOT NULL    DEFAULT CURRENT_TIMESTAMP(),
+    turma_id    INT             NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS testdb.Calendario (
+    id          INT             NOT NULL    AUTO_INCREMENT,
+    titulo      VARCHAR(255)    NOT NULL,
+    turma_id    INT             NOT NULL,
     PRIMARY KEY (id)
 );

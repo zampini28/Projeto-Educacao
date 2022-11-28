@@ -12,8 +12,8 @@ Meu objetivo é construir um Banco de Dados referente ao diagrama de classe
     [x] Nota;
     [x] FAQ;
     [x] Tarefa;
-    [ ] Feedback;
-    [ ] Calendário;
+    [x] Feedback;
+    [x] Calendário;
     [ ] Notificação;
     [ ] Material; 
     [ ] Disciplina;
