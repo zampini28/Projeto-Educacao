@@ -19,3 +19,4 @@ Meu objetivo é construir um Banco de Dados referente ao diagrama de classe
     [ ] Material; 
     [ ] Disciplina;
     [ ] Aluno-Professor;
+    [ ] Adcionar nota final na tabela nota automaticamente;

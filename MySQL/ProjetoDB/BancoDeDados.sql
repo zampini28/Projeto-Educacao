@@ -51,7 +51,11 @@ CREATE TABLE IF NOT EXISTS testdb.Aluno (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS testdb.Turma (
+CREATE TABLE IF NOT EXISTS testdb.Nota (
     id INT NOT NULL AUTO_INCREMENT,
-    
+    aluno_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    prova DOUBLE NULL DEFAULT NULL,
+    trabalhos DOUBLE NULL DEFAULT NULL,
+    nota_final DOUBLE NULL DEFAULT NULL 
 );
