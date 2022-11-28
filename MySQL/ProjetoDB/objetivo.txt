@@ -14,8 +14,8 @@ Meu objetivo é construir um Banco de Dados referente ao diagrama de classe
     [x] Tarefa;
     [x] Feedback;
     [x] Calendário;
-    [ ] Notificação;
-    [ ] Material; 
+    [x] Notificação;
+    [x] Material; 
     [ ] Disciplina;
     [ ] Aluno-Professor;
     [ ] Adcionar nota final na tabela nota automaticamente;

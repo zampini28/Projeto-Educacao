@@ -95,3 +95,19 @@ CREATE TABLE IF NOT EXISTS testdb.Calendario (
     turma_id    INT             NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS testdb.Notificacao (
+    id          INT NOT NULL    AUTO_INCREMENT,
+    aluno_id    INT NOT NULL,
+    turma_id    INT NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS testdb.Material (
+    id          INT             NOT NULL    AUTO_INCREMENT,
+    titulo      VARCHAR(255)    NOT NULL,
+    `data`      DATETIME        NOT NULL    CURRENT_TIMESTAMP(),
+    turma_id    INT             NOT NULL,
+    PRIMARY KEY (id)
+);
+
