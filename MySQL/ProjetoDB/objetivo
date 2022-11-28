@@ -1,0 +1,21 @@
+Meu objetivo é construir um Banco de Dados referente ao diagrama de classe
+
+1. Implementar todos os atributos dos usuários de cadastros: 
+    [x] Usuário;
+    [x] Administração;
+    [x] Professor;
+    [x] Responsável;
+    [x] Aluno;
+
+2. Adicionar outros obejtos:
+    [ ] Turma;
+    [ ] Nota;
+    [ ] FAQ;
+    [ ] Email;
+    [ ] Tarefa;
+    [ ] Feedback;
+    [ ] Calendário;
+    [ ] Notificação;
+    [ ] Material; 
+    [ ] Disciplina;
+    [ ] Aluno-Professor;
