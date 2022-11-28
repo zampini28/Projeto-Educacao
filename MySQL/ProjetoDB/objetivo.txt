@@ -9,8 +9,8 @@ Meu objetivo é construir um Banco de Dados referente ao diagrama de classe
 
 2. Adicionar outros obejtos:
     [ ] Turma;
-    [ ] Nota;
-    [ ] FAQ;
+    [x] Nota;
+    [x] FAQ;
     [ ] Email;
     [ ] Tarefa;
     [ ] Feedback;

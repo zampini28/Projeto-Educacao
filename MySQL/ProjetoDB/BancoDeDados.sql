@@ -52,10 +52,21 @@ CREATE TABLE IF NOT EXISTS testdb.Aluno (
 );
 
 CREATE TABLE IF NOT EXISTS testdb.Nota (
-    id INT NOT NULL AUTO_INCREMENT,
-    aluno_id INT NOT NULL,
-    turma_id INT NOT NULL,
-    prova DOUBLE NULL DEFAULT NULL,
-    trabalhos DOUBLE NULL DEFAULT NULL,
-    nota_final DOUBLE NULL DEFAULT NULL 
+    id          INT     NOT NULL    AUTO_INCREMENT,
+    aluno_id    INT     NOT NULL,
+    turma_id    INT     NOT NULL,
+    prova       DOUBLE  NULL        DEFAULT NULL,
+    trabalhos   DOUBLE  NULL        DEFAULT NULL,
+    nota_final  DOUBLE  NULL        DEFAULT NULL,
+    PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS testdb.FAQ (
+    id                  INT         NOT NULL    AUTO_INCREMENT,
+    autor_usuario_id    INT         NOT NULL,
+    conteudo            TEXT        NOT NULL,
+    data                DATETIME    NOT NULL    DEFAULT CURRENT_TIMESTAMP(),
+    TURMA_ID            INT         NOT NULL,
+    PRIMARY KEY (id)
+);
+
