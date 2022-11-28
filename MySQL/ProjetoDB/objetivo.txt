@@ -11,8 +11,7 @@ Meu objetivo é construir um Banco de Dados referente ao diagrama de classe
     [ ] Turma;
     [x] Nota;
     [x] FAQ;
-    [ ] Email;
-    [ ] Tarefa;
+    [x] Tarefa;
     [ ] Feedback;
     [ ] Calendário;
     [ ] Notificação;
@@ -20,3 +19,4 @@ Meu objetivo é construir um Banco de Dados referente ao diagrama de classe
     [ ] Disciplina;
     [ ] Aluno-Professor;
     [ ] Adcionar nota final na tabela nota automaticamente;
+    [ ] Adcionar nota da tarefa automaticamente nas tabelas notas;

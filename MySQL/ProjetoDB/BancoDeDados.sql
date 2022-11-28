@@ -70,3 +70,13 @@ CREATE TABLE IF NOT EXISTS testdb.FAQ (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS testdb.Tarefa (
+    id      INT             NOT NULL    AUTO_INCREMENT,
+    titulo  VARCHAR(255)    NOT NULL,
+    status  TINYINT         NOT NULL    DEFAULT 0,
+    prazo   DATETIME        NOT NULL,
+    notaMax DOUBLE          NOT NULL    DEFAULT 10,
+    nota    DOUBLE          NULL        DEFAULT NULL,
+    turma   INT             NOT NULL,
+    PRIMARY KEY (id)
+);
