@@ -23,10 +23,10 @@ CREATE TABLE IF NOT EXISTS testdb.Usuario (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS testdb.Professor(
+CREATE TABLE IF NOT EXISTS testdb.Professor (
     id              INT NOT NULL    AUTO_INCREMENT,
     disciplina_id   INT NOT NULL,
-    usuario_id      INT NOT NULL    AUTO_INCREMENT,
+    usuario_id      INT NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS testdb.Notificacao (
 CREATE TABLE IF NOT EXISTS testdb.Material (
     id          INT             NOT NULL    AUTO_INCREMENT,
     titulo      VARCHAR(255)    NOT NULL,
-    `data`      DATETIME        NOT NULL    CURRENT_TIMESTAMP(),
+    `data`      DATETIME        NOT NULL    DEFAULT CURRENT_TIMESTAMP(),
     turma_id    INT             NOT NULL,
     PRIMARY KEY (id)
 );
