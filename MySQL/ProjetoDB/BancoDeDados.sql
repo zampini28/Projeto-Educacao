@@ -51,6 +51,11 @@ CREATE TABLE IF NOT EXISTS testdb.Aluno (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS testdb.Turma (
+    id  INT NOT NULL    AUTO_INCREMENT,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS testdb.Nota (
     id          INT     NOT NULL    AUTO_INCREMENT,
     aluno_id    INT     NOT NULL,
@@ -111,3 +116,8 @@ CREATE TABLE IF NOT EXISTS testdb.Material (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS testdb.Disciplina (
+    id          INT             NOT NULL    AUTO_INCREMENT,
+    disciplina  VARCHAR(255)    NOT NULL,
+    PRIMARY KEY (id)
+);

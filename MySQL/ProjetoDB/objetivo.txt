@@ -7,8 +7,8 @@ Meu objetivo é construir um Banco de Dados referente ao diagrama de classe
     [x] Responsável;
     [x] Aluno;
 
-2. Adicionar outros obejtos:
-    [ ] Turma;
+2. Adicionar outros objetos:
+    [x] Turma;
     [x] Nota;
     [x] FAQ;
     [x] Tarefa;
@@ -16,7 +16,7 @@ Meu objetivo é construir um Banco de Dados referente ao diagrama de classe
     [x] Calendário;
     [x] Notificação;
     [x] Material; 
-    [ ] Disciplina;
+    [x] Disciplina;
     [ ] Aluno-Professor;
     [ ] Adcionar nota final na tabela nota automaticamente;
     [ ] Adcionar nota da tarefa automaticamente nas tabelas notas;
