@@ -23,16 +23,16 @@ CREATE TABLE IF NOT EXISTS testdb.Usuario (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS testdb.Administrador (
+    id          INT NOT NULL    AUTO_INCREMENT,
+    usuario_id  INT NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS testdb.Professor (
     id              INT NOT NULL    AUTO_INCREMENT,
     disciplina_id   INT NOT NULL,
     usuario_id      INT NOT NULL,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS testdb.Administrador (
-    id          INT NOT NULL    AUTO_INCREMENT,
-    usuario_id  INT NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS testdb.Nota (
     aluno_id    INT     NOT NULL,
     turma_id    INT     NOT NULL,
     prova       DOUBLE  NULL        DEFAULT NULL,
-    trabalhos   DOUBLE  NULL        DEFAULT NULL,
+    trabalho    DOUBLE  NULL        DEFAULT NULL,
     nota_final  DOUBLE  NULL        DEFAULT NULL,
     PRIMARY KEY (id)
 );
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS testdb.FAQ (
     autor_usuario_id    INT         NOT NULL,
     conteudo            TEXT        NOT NULL,
     `data`              DATETIME    NOT NULL    DEFAULT CURRENT_TIMESTAMP(),
-    TURMA_ID            INT         NOT NULL,
+    turma_id            INT         NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS testdb.Tarefa (
     prazo       DATETIME        NOT NULL,
     notaMax     DOUBLE          NOT NULL    DEFAULT 10,
     nota        DOUBLE          NULL        DEFAULT NULL,
-    turma       INT             NOT NULL,
+    turma_id    INT             NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -121,3 +121,112 @@ CREATE TABLE IF NOT EXISTS testdb.Disciplina (
     disciplina  VARCHAR(255)    NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS testdb.Aluno_Responsavel (
+    id              INT NOT NULL    AUTO_INCREMENT,
+    responsavel_id  INT NOT NULL,
+    aluno_id        INT NOT NULL,
+    PRIMARY KEY (id)
+);
+
+#--------------------------
+# Adding Foreign Key
+#--------------------------
+ALTER TABLE testdb.Administrador
+    ADD CONSTRAINT fk_usuario_administrador
+        FOREIGN KEY (usuario_id)
+        REFERENCES testdb.Usuario (id);
+
+
+ALTER TABLE testdb.Professor
+    ADD CONSTRAINT fk_disciplina_professor
+        FOREIGN KEY (disciplina_id)
+        REFERENCES testdb.Disciplina (id),
+
+        ADD CONSTRAINT fk_usuario_professor
+        FOREIGN KEY (usuario_id)
+        REFERENCES testdb.Usuario (id);
+
+
+ALTER TABLE testdb.Responsavel
+    ADD CONSTRAINT fk_administrador_responsavel
+        FOREIGN KEY (cadastrador_id)
+        REFERENCES testdb.Administrador (id),
+
+    ADD CONSTRAINT fk_usuario_responsavel
+        FOREIGN KEY (usuario_id)
+        REFERENCES testdb.Usuario (id);
+
+
+ALTER TABLE testdb.Aluno
+    ADD CONSTRAINT fk_administrador_aluno
+        FOREIGN KEY (cadastrador_id)
+        REFERENCES testdb.Administrador (id),
+  
+    ADD CONSTRAINT fk_usuario_aluno
+        FOREIGN KEY (usuario_id)
+        REFERENCES testdb.Usuario (id);
+    
+
+ALTER TABLE testdb.Nota
+    ADD CONSTRAINT fk_aluno_nota
+        FOREIGN KEY (aluno_id)
+        REFERENCES testdb.Aluno (id),
+
+    ADD CONSTRAINT fk_turma_nota
+        FOREIGN KEY (turma_id)
+        REFERENCES testdb.Turma (id);
+
+
+ALTER TABLE testdb.FAQ
+    ADD CONSTRAINT fk_usuario_faq
+        FOREIGN KEY (autor_usuario_id)
+        REFERENCES testdb.Usuario (id),
+    
+    ADD CONSTRAINT fk_turma_faq
+        FOREIGN KEY (turma_id)
+        REFERENCES testdb.Turma (id);
+
+
+ALTER TABLE testdb.Tarefa
+    ADD CONSTRAINT fk_turma_tarefa
+        FOREIGN KEY (turma_id)
+        REFERENCES testdb.Turma (id);
+
+
+ALTER TABLE testdb.Feedback
+    ADD CONSTRAINT fk_turma_feedback
+        FOREIGN KEY (turma_id)
+        REFERENCES testdb.Turma (id);
+
+
+ALTER TABLE testdb.Calendario
+    ADD CONSTRAINT fk_turma_calendario
+        FOREIGN KEY (turma_id)
+        REFERENCES testdb.Turma (id);
+
+
+ALTER TABLE testdb.Notificacao
+    ADD CONSTRAINT fk_aluno_notificacao
+        FOREIGN KEY (aluno_id)
+        REFERENCES testdb.Aluno (id),
+
+    ADD CONSTRAINT fk_turma_notificacao
+        FOREIGN KEY (turma_id)
+        REFERENCES testdb.Turma (id);
+
+
+ALTER TABLE testdb.Material
+    ADD CONSTRAINT fk_turma_material
+        FOREIGN KEY (turma_id)
+        REFERENCES testdb.Turma (id);
+
+
+ALTER TABLE testdb.Aluno_Responsavel
+    ADD CONSTRAINT fk_responsavel_alunoreponsavel
+        FOREIGN KEY (responsavel_id)
+        REFERENCES testdb.Responsavel (id),
+
+    ADD CONSTRAINT fk_aluno_alunoreponsavel
+        FOREIGN KEY (aluno_id)
+        REFERENCES testdb.Aluno (id);

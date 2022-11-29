@@ -17,6 +17,25 @@ Meu objetivo é construir um Banco de Dados referente ao diagrama de classe
     [x] Notificação;
     [x] Material; 
     [x] Disciplina;
-    [ ] Aluno-Professor;
+    [x] Aluno-Responsável;
+
+3. Adicionar foreign key:
+    [x] Usuário;
+    [x] Administração;
+    [x] Professor;
+    [x] Responsável;
+    [x] Aluno;
+    [x] Turma;
+    [x] Nota;
+    [x] FAQ;
+    [x] Tarefa;
+    [x] Feedback;
+    [x] Calendário;
+    [x] Notificação;
+    [x] Material; 
+    [x] Disciplina;
+    [x] Aluno-Responsável;
+
+N. More...
     [ ] Adcionar nota final na tabela nota automaticamente;
     [ ] Adcionar nota da tarefa automaticamente nas tabelas notas;
