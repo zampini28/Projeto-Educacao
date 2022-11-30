@@ -16,10 +16,10 @@ CREATE TABLE IF NOT EXISTS testdb.Usuario (
     n_telefone  VARCHAR(255)    NULL        DEFAULT NULL,
     email       VARCHAR(255)    NOT NULL,
     usuario     VARCHAR(255)    NOT NULL,
-    nascimento  DATETIME        NOT NULL,
+    nascimento  DATE            NOT NULL,
     cadastro    DATETIME        NOT NULL    DEFAULT CURRENT_TIMESTAMP(),
     bloqueado   TINYINT         NOT NULL    DEFAULT 0,
-    senha       INT             NOT NULL,
+    senha       VARCHAR(255)    NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -129,6 +129,15 @@ CREATE TABLE IF NOT EXISTS testdb.Aluno_Responsavel (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS testdb.Analysis (
+    id  INT             NOT NULL    AUTO_INCREMENT  PRIMARY KEY,
+    ac  VARCHAR(100)    NOT NULL    DEFAULT '111',
+    aj  VARCHAR(92)     NULL        DEFAULT '{"x": 333}',
+    bx  INT             NOT NULL    DEFAULT '50123111'
+);
+
+DROP TABLE testdb.Analysis;
+
 #--------------------------
 # Adding Foreign Key
 #--------------------------
@@ -230,3 +239,7 @@ ALTER TABLE testdb.Aluno_Responsavel
     ADD CONSTRAINT fk_aluno_alunoreponsavel
         FOREIGN KEY (aluno_id)
         REFERENCES testdb.Aluno (id);
+
+#--------------------------
+# Inserting new records
+#--------------------------

@@ -1,0 +1,104 @@
+
+
+(nome, rg, cpf, n_telefone, email, usuario, nascimento, senha)
+
+
+('nome', 'rg', 'cpf', 'n_telefone', 'email', 'usuario', 'nascimento', 'senha')
+
+('nome', 'rg', 'cpf', 
+ 'n_telefone', 'email', 
+ 'usuario', 'nascimento', 'senha');
+
+---------------------------
+
+('Luana Rocha Sousa', '45.560.970-9', '551.296.556-56', 
+ '(11) 96845-6020', 'LuanaRochaSousa@gmail.com', 
+ 'LuanaRocha', '2006-06-12', 'ahShoop7ath');
+
+('Melissa Ferreira Barbosa', '53.459.957-9', '162.146.465-27', 
+ '(11) 97058-6574', 'MelissaFerreiraBarbosa@gmail.com', 
+ 'MFerreira', '2006-09-13', 'Piej8eeYi');
+
+('Luis Silva Pinto', '52.606.404-2', '283.707.729-19', 
+ '(11) 92215-2205', 'LuisSilvaPinto@gmail.com', 
+ 'LuizSPinto', '2006-10-22', 'cah9tah2Ei');
+
+('Carla Correia Rocha', '55.422.483-9', '998.224.670-44', 
+ '(11) 98255-7689', 'CarlaCorreiaRocha@gmail.com', 
+ 'CCrocha', '2006-12-29', 'ahsheiG4oogh');
+
+('Breno Fernandes Rodrigues', '45.392.117-4', '507.346.788-43', 
+ '(11) 94690-3040', 'BrenoFernandesRodrigues@gmail.com', 
+ 'Breno_Fernandes', '1951-07-30', 'iqu2dohPhai');
+
+('Daniel Araujo Carvalho', '45.392.179-3', '269.857.143-82', 
+ '(11) 95062-5064', 'DanielAraujoCarvalho@gmail.com', 
+ 'DanielAraujo_Carvalho', '1989-04-19', 'Biezae4aer');
+
+('Mariana Santos Rocha', '49.298.328-8', '459.842.703-58', 
+ '(11) 92981-3140', 'MarianaSantosRocha@gmail.com', 
+ 'Mariana.S.Rocha', '1977-01-21', 'Neip0unai0');
+
+('Júlio Costa Souza', '47.166.673-3', '404.836.087-69', 
+ '(11) 97527-7296', 'JulioCostaSouza@gmail.com', 
+ 'JúlioCosta', '1991-04-28', 'oov7fu8I');
+
+('Eduarda Pereira Oliveira', '54.820.520-4', '328.620.228-29', 
+ '(11) 93283-3603', 'EduardaPereiraOliveira@gmail.com', 
+ 'EduardaPOliveira', '1998-03-30', 'Quoor5OoGh2');
+
+('Fernanda Araujo Souza', '49.296.479-8', '645.170.901-83', 
+ '(11) 99681-2557', 'FernandaAraujoSouza@gmail.com', 
+ 'FernandaSouza', '1996-01-31', 'eeFee6ohl');
+
+4 Alunos
+
+3 Pais
+
+2 Professores
+
+1 Administrador
+
+
+INSERT INTO testdb.Usuario 
+(nome, rg, cpf, n_telefone, email, usuario, nascimento, senha)
+VALUES
+('Luana Rocha Sousa', '45.560.970-9', '551.296.556-56', 
+ '(11) 96845-6020', 'LuanaRochaSousa@gmail.com', 
+ 'LuanaRocha', '2006-06-12', 'ahShoop7ath'),
+
+('Melissa Ferreira Barbosa', '53.459.957-9', '162.146.465-27', 
+ '(11) 97058-6574', 'MelissaFerreiraBarbosa@gmail.com', 
+ 'MFerreira', '2006-09-13', 'Piej8eeYi'),
+
+('Luis Silva Pinto', '52.606.404-2', '283.707.729-19', 
+ '(11) 92215-2205', 'LuisSilvaPinto@gmail.com', 
+ 'LuizSPinto', '2006-10-22', 'cah9tah2Ei'),
+
+('Carla Correia Rocha', '55.422.483-9', '998.224.670-44', 
+ '(11) 98255-7689', 'CarlaCorreiaRocha@gmail.com', 
+ 'CCrocha', '2006-12-29', 'ahsheiG4oogh'),
+
+('Breno Fernandes Rodrigues', '45.392.117-4', '507.346.788-43', 
+ '(11) 94690-3040', 'BrenoFernandesRodrigues@gmail.com', 
+ 'Breno_Fernandes', '1951-07-30', 'iqu2dohPhai'),
+
+('Daniel Araujo Carvalho', '45.392.179-3', '269.857.143-82', 
+ '(11) 95062-5064', 'DanielAraujoCarvalho@gmail.com', 
+ 'DanielAraujo_Carvalho', '1989-04-19', 'Biezae4aer'),
+
+('Mariana Santos Rocha', '49.298.328-8', '459.842.703-58', 
+ '(11) 92981-3140', 'MarianaSantosRocha@gmail.com', 
+ 'Mariana.S.Rocha', '1977-01-21', 'Neip0unai0'),
+
+('Júlio Costa Souza', '47.166.673-3', '404.836.087-69', 
+ '(11) 97527-7296', 'JulioCostaSouza@gmail.com', 
+ 'JúlioCosta', '1991-04-28', 'oov7fu8I'),
+
+('Eduarda Pereira Oliveira', '54.820.520-4', '328.620.228-29', 
+ '(11) 93283-3603', 'EduardaPereiraOliveira@gmail.com', 
+ 'EduardaPOliveira', '1998-03-30', 'Quoor5OoGh2'),
+
+('Fernanda Araujo Souza', '49.296.479-8', '645.170.901-83', 
+ '(11) 99681-2557', 'FernandaAraujoSouza@gmail.com', 
+ 'FernandaSouza', '1996-01-31', 'eeFee6ohl');
