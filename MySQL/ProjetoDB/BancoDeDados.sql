@@ -286,13 +286,19 @@ VALUES
  '(11) 99681-2557', 'FernandaAraujoSouza@gmail.com', 
  'FernandaSouza', '1996-01-31', 'eeFee6ohl');
 
- INSERT INTO testdb.Administrador (usuario_id) VALUES (10);
- 
- INSERT INTO testdb.Aluno
- (matricula, cadastrador_id, usuario_id)
- VALUES
- ('P2DSr2NFsDwzKqikF084vI9OddcID0e', 1, 1),
- ('NTukjJ7bL7IV5AnVnjt8xuzCXkFyHhI', 1, 2),
- ('NFLPnaQjxbTcgIcODV7IuDsGdu2HvhK', 1, 3),
- ('kRGiMQBr3NmCdMlSWxAI0zaE7UivYkC', 1, 4);
+INSERT INTO testdb.Administrador (usuario_id) VALUES (10);
 
+INSERT INTO testdb.Professor (usuario_id) VALUES (8), (9);
+
+INSERT INTO testdb.Aluno
+(matricula, cadastrador_id, usuario_id)
+VALUES
+('P2DSr2NFsDwzKqikF084vI9OddcID0e', 1, 1),
+('NTukjJ7bL7IV5AnVnjt8xuzCXkFyHhI', 1, 2),
+('NFLPnaQjxbTcgIcODV7IuDsGdu2HvhK', 1, 3),
+('kRGiMQBr3NmCdMlSWxAI0zaE7UivYkC', 1, 4);
+
+INSERT INTO testdb.Responsavel
+(cadastrador_id, usuario_id)
+VALUES
+(1, 5), (1, 6), (1, 7);
