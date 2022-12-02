@@ -47,7 +47,7 @@ Resquisitos:
 Scripts:
     [x] Criar, usar, apagar banco de dados;
     [x] Criar, alterar, apagar tabelas;
-    [ ] Inserir, atualizar, deletar pelo menos 5 registros;
+    [x] Inserir, atualizar, deletar pelo menos 5 registros;
     [ ] Criar backup das tabelas (ou seja, criar a tabela com estrutura igual e executar o Insert com select). 1 backup para cada tabela;
     [ ] Criar Select para consultar todos os dados das tabelas. Uma consulta destas por tabela do DER;
     [ ] Criar Select para consultar algum campo das tabelas. Pelo menos 3;
