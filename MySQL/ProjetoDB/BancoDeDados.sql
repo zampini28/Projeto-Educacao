@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS testdb.Usuario (
     cpf         VARCHAR(255)    NOT NULL,
     n_telefone  VARCHAR(255)    NULL        DEFAULT NULL,
     email       VARCHAR(255)    NOT NULL,
-    usuario     VARCHAR(255)    NOT NULL    UNIQUE,
+    usuario     VARCHAR(255)    NOT NULL	UNIQUE,
     nascimento  DATE            NOT NULL,
     cadastro    DATETIME        NOT NULL    DEFAULT CURRENT_TIMESTAMP(),
     bloqueado   TINYINT         NOT NULL    DEFAULT 0,
@@ -52,7 +52,9 @@ CREATE TABLE IF NOT EXISTS testdb.Aluno (
 );
 
 CREATE TABLE IF NOT EXISTS testdb.Turma (
-    id  INT NOT NULL    AUTO_INCREMENT,
+    id  			INT 			NOT NULL	AUTO_INCREMENT,
+    nome 			VARCHAR(255)	NOT NULL,
+    disciplina_id	INT				NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -232,13 +234,19 @@ ALTER TABLE testdb.Material
 
 
 ALTER TABLE testdb.Aluno_Responsavel
-    ADD CONSTRAINT fk_responsavel_alunoreponsavel
+    ADD CONSTRAINT fk_responsavel_alunoresponsavel
         FOREIGN KEY (responsavel_id)
         REFERENCES testdb.Responsavel (id),
 
-    ADD CONSTRAINT fk_aluno_alunoreponsavel
+    ADD CONSTRAINT fk_aluno_alunoresponsavel
         FOREIGN KEY (aluno_id)
         REFERENCES testdb.Aluno (id);
+
+
+ALTER TABLE testdb.Turma
+	ADD CONSTRAINT fk_disciplina_turma
+		FOREIGN KEY (disciplina_id)
+        REFERENCES testdb.Disciplina (id);
 
 #--------------------------
 # Stored Procedures
@@ -247,10 +255,9 @@ DELIMITER $$
 CREATE PROCEDURE adicionar_administrador (
  IN nome_ VARCHAR(255), IN rg_ VARCHAR(255), IN cpf_ VARCHAR(255),
  IN n_telefone_ VARCHAR(255), IN email_ VARCHAR(255), IN usuario_ VARCHAR(255),
- IN nascimento_ VARCHAR(255), IN senha_ VARCHAR(255)
- )
+ IN nascimento_ VARCHAR(255), IN senha_ VARCHAR(255))
 BEGIN
-    INSERT INTO testdb.Usuario VALUES 
+	INSERT INTO testdb.Usuario VALUES 
     (DEFAULT, nome_, rg_, cpf_, n_telefone_, email_, usuario_, nascimento_, DEFAULT, DEFAULT, senha_);
     INSERT INTO testdb.Administrador VALUES
     (DEFAULT, (SELECT id FROM testdb.Usuario WHERE usuario=usuario_));
@@ -261,7 +268,7 @@ CREATE PROCEDURE adicionar_professor (
  IN n_telefone_ VARCHAR(255), IN email_ VARCHAR(255), IN usuario_ VARCHAR(255),
  IN nascimento_ VARCHAR(255), IN senha_ VARCHAR(255), IN disciplina_ VARCHAR(255))
 BEGIN
-    INSERT INTO testdb.Usuario VALUES 
+	INSERT INTO testdb.Usuario VALUES 
     (DEFAULT, nome_, rg_, cpf_, n_telefone_, email_, usuario_, nascimento_, DEFAULT, DEFAULT, senha_);
     INSERT INTO testdb.Professor VALUES
     (DEFAULT, (SELECT id FROM testdb.Disciplina WHERE disciplina=disciplina_), 
@@ -273,7 +280,7 @@ CREATE PROCEDURE adicionar_responsavel (
  IN n_telefone_ VARCHAR(255), IN email_ VARCHAR(255), IN usuario_ VARCHAR(255),
  IN nascimento_ VARCHAR(255), IN senha_ VARCHAR(255), IN cadastrador INT)
 BEGIN
-    INSERT INTO testdb.Usuario VALUES 
+	INSERT INTO testdb.Usuario VALUES 
     (DEFAULT, nome_, rg_, cpf_, n_telefone_, email_, usuario_, nascimento_, DEFAULT, DEFAULT, senha_);
     INSERT INTO testdb.Responsavel VALUES
     (DEFAULT, cadastrador, (SELECT id FROM testdb.Usuario WHERE usuario=usuario_));
@@ -285,7 +292,7 @@ CREATE PROCEDURE adicionar_aluno (
  IN nascimento_ VARCHAR(255), IN senha_ VARCHAR(255), IN matricula_ VARCHAR(255), 
  IN cadastrador_id_ INT)
 BEGIN
-    INSERT INTO testdb.Usuario VALUES 
+	INSERT INTO testdb.Usuario VALUES 
     (DEFAULT, nome_, rg_, cpf_, n_telefone_, email_, usuario_, nascimento_, DEFAULT, DEFAULT, senha_);
     INSERT INTO testdb.Aluno VALUES
     (DEFAULT, matricula_, cadastrador_id_, (SELECT id FROM testdb.Usuario WHERE usuario=usuario_));
@@ -297,17 +304,39 @@ DELIMITER ;
 #--------------------------
 SET @id_do_cadastrador = 1;
 
+# -- INSERT Disciplina --
 INSERT INTO testdb.Disciplina 
  (disciplina)
 VALUES
  ('Língua Portuguesa'), ('Matemática'), ('História'), ('Geografia'),
  ('Ciências'), ('Artes'), ('Educação Física'), ('Inglês');
- 
+
+
+# -- INSERT Turma --
+INSERT INTO testdb.Turma
+ (nome, disciplina_id)
+VALUES
+	('9º ano Português', (SELECT id FROM testdb.Disciplina WHERE disciplina='Língua Portuguesa')),
+    ('9º ano Ciências', (SELECT id FROM testdb.Disciplina WHERE disciplina='Ciências'));
+
+
+# -- INSERT Material --
+INSERT INTO testdb.Material
+ (titulo, turma_id)
+VALUES
+ ('Exercícios de interpretação', (SELECT id FROM testdb.Turma WHERE nome='9º ano Português')),
+ ('Ciclo da água e tratamento da água', (SELECT id FROM testdb.Turma WHERE nome='9º ano Ciências')),
+ ('Papel dos microorganismos na produção de alimentos', (SELECT id FROM testdb.Turma WHERE nome='9º ano Ciências'));
+
+
+# -- INSERT Administrador --
 CALL testdb.adicionar_administrador (
  'Fernanda Araujo Souza', '49.296.479-8', '645.170.901-83', 
  '(11) 99681-2557', 'FernandaAraujoSouza@gmail.com', 
  'FernandaSouza', '1996-01-31', 'eeFee6ohl');
 
+
+# -- INSERT Professor --
 CALL testdb.adicionar_professor (
  'Júlio Costa Souza', '47.166.673-3', '404.836.087-69', 
  '(11) 97527-7296', 'JulioCostaSouza@gmail.com', 
@@ -318,6 +347,7 @@ CALL testdb.adicionar_professor (
  '(11) 93283-3603', 'EduardaPereiraOliveira@gmail.com', 
  'EduardaPOliveira', '1998-03-30', 'Quoor5OoGh2', 'Língua Portuguesa');
  
+# -- INSERT Responsavel --
 CALL testdb.adicionar_responsavel (
  'Breno Fernandes Rodrigues', '45.392.117-4', '507.346.788-43', 
  '(11) 94690-3040', 'BrenoFernandesRodrigues@gmail.com', 
@@ -333,35 +363,39 @@ CALL testdb.adicionar_responsavel (
  '(11) 92981-3140', 'MarianaSantosRocha@gmail.com', 
  'Mariana.S.Rocha', '1977-01-21', 'Neip0unai0', @id_do_cadastrador);
  
+
+# -- INSERT Aluno --
 CALL testdb.adicionar_aluno (
  'Luana Rocha Sousa', '45.560.970-9', '551.296.556-56', 
  '(11) 96845-6020', 'LuanaRochaSousa@gmail.com', 
- 'LuanaRocha', '2006-06-12', 'ahShoop7ath', '2009201003009-8', @id_do_cadastrador);
+ 'LuanaRocha', '2009-06-12', 'ahShoop7ath', '2009201003009-8', @id_do_cadastrador);
 
 CALL testdb.adicionar_aluno ('
  Melissa Ferreira Barbosa', '53.459.957-9', '162.146.465-27', 
  '(11) 97058-6574', 'MelissaFerreiraBarbosa@gmail.com', 
- 'MFerreira', '2006-09-13', 'Piej8eeYi', '2529701099009-4', @id_do_cadastrador);
+ 'MFerreira', '2009-09-13', 'Piej8eeYi', '2529701099009-4', @id_do_cadastrador);
  
 CALL testdb.adicionar_aluno (
  'Luis Silva Pinto', '52.606.404-2', '283.707.729-19', 
  '(11) 92215-2205', 'LuisSilvaPinto@gmail.com', 
- 'LuizSPinto', '2006-10-22', 'cah9tah2Ei', '5821201033009-6', @id_do_cadastrador);
+ 'LuizSPinto', '2009-10-22', 'cah9tah2Ei', '5821201033009-6', @id_do_cadastrador);
 
 CALL testdb.adicionar_aluno (
  'Carla Correia Rocha', '55.422.483-9', '998.224.670-44', 
  '(11) 98255-7689', 'CarlaCorreiaRocha@gmail.com', 
- 'CCrocha', '2006-12-29', 'ahsheiG4oogh', '9425501033029-5', @id_do_cadastrador);
- 
+ 'CCrocha', '2009-12-29', 'ahsheiG4oogh', '9425501033029-5', @id_do_cadastrador);
+
+# -- UPDATE Professor -- 
 UPDATE testdb.Professor
 SET disciplina_id = (SELECT id FROM testdb.Disciplina WHERE disciplina='Ciências')
 WHERE usuario_id=(SELECT id FROM testdb.Usuario WHERE usuario='JúlioCosta');
 
+
+# -- DELETE Administrador -- 
 CALL testdb.adicionar_administrador (
  'Nicole Santos Castro', '54.004.755-5', '955.915.067-71',
  '(11) 96512-7796', 'NicoleSantosCastro@gmail.com',
  'NicoleCastro', '1957-07-08', 'No4nee6zaigh');
-
 
 DELETE FROM testdb.Administrador WHERE usuario_id=
  (SELECT id FROM testdb.Usuario WHERE usuario='NicoleCastro');
