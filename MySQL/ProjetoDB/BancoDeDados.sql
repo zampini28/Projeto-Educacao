@@ -368,22 +368,32 @@ CALL testdb.adicionar_responsavel (
 CALL testdb.adicionar_aluno (
  'Luana Rocha Sousa', '45.560.970-9', '551.296.556-56', 
  '(11) 96845-6020', 'LuanaRochaSousa@gmail.com', 
- 'LuanaRocha', '2009-06-12', 'ahShoop7ath', '2009201003009-8', @id_do_cadastrador);
+ 'LuanaRocha', '2008-06-12', 'ahShoop7ath', '2009201003009-8', @id_do_cadastrador);
 
-CALL testdb.adicionar_aluno ('
- Melissa Ferreira Barbosa', '53.459.957-9', '162.146.465-27', 
+CALL testdb.adicionar_aluno (
+ 'Melissa Ferreira Barbosa', '53.459.957-9', '162.146.465-27', 
  '(11) 97058-6574', 'MelissaFerreiraBarbosa@gmail.com', 
- 'MFerreira', '2009-09-13', 'Piej8eeYi', '2529701099009-4', @id_do_cadastrador);
+ 'MFerreira', '2008-09-13', 'Piej8eeYi', '2529701099009-4', @id_do_cadastrador);
  
 CALL testdb.adicionar_aluno (
  'Luis Silva Pinto', '52.606.404-2', '283.707.729-19', 
  '(11) 92215-2205', 'LuisSilvaPinto@gmail.com', 
- 'LuizSPinto', '2009-10-22', 'cah9tah2Ei', '5821201033009-6', @id_do_cadastrador);
+ 'LuizSPinto', '2008-10-22', 'cah9tah2Ei', '5821201033009-6', @id_do_cadastrador);
 
 CALL testdb.adicionar_aluno (
  'Carla Correia Rocha', '55.422.483-9', '998.224.670-44', 
  '(11) 98255-7689', 'CarlaCorreiaRocha@gmail.com', 
- 'CCrocha', '2009-12-29', 'ahsheiG4oogh', '9425501033029-5', @id_do_cadastrador);
+ 'CCrocha', '2008-08-29', 'ahsheiG4oogh', '9425501033029-5', @id_do_cadastrador);
+
+CREATE TABLE IF NOT EXISTS testdb.Nota (
+    id          INT     NOT NULL    AUTO_INCREMENT,
+    aluno_id    INT     NOT NULL,
+    turma_id    INT     NOT NULL,
+    prova       DOUBLE  NULL        DEFAULT NULL,
+    trabalho    DOUBLE  NULL        DEFAULT NULL,
+    nota_final  DOUBLE  NULL        DEFAULT NULL,
+    PRIMARY KEY (id)
+);
 
 # -- UPDATE Professor -- 
 UPDATE testdb.Professor
@@ -401,3 +411,48 @@ DELETE FROM testdb.Administrador WHERE usuario_id=
  (SELECT id FROM testdb.Usuario WHERE usuario='NicoleCastro');
 
 DELETE FROM testdb.Usuario WHERE usuario='NicoleCastro';
+
+#--------------------------
+# Backup tables
+#--------------------------
+CREATE TABLE IF NOT EXISTS testdb.Usuario_Backup AS SELECT * FROM testdb.Usuario;
+
+CREATE TABLE IF NOT EXISTS testdb.Administrador_Backup AS SELECT * FROM testdb.Administrador;
+
+CREATE TABLE IF NOT EXISTS testdb.Professor_Backup AS SELECT * FROM testdb.Professor;
+
+CREATE TABLE IF NOT EXISTS testdb.Responsavel_Backup AS SELECT * FROM testdb.Responsavel;
+
+CREATE TABLE IF NOT EXISTS testdb.Aluno_Backup AS SELECT * FROM testdb.Aluno;
+
+CREATE TABLE IF NOT EXISTS testdb.Turma_Backup AS SELECT * FROM testdb.Turma;
+
+CREATE TABLE IF NOT EXISTS testdb.Nota_Backup AS SELECT * FROM testdb.Nota;
+
+CREATE TABLE IF NOT EXISTS testdb.FAQ_Backup AS SELECT * FROM testdb.FAQ;
+
+CREATE TABLE IF NOT EXISTS testdb.Tarefa_Backup AS SELECT * FROM testdb.Tarefa;
+
+CREATE TABLE IF NOT EXISTS testdb.Feedback_Backup AS SELECT * FROM testdb.Feedback;
+
+CREATE TABLE IF NOT EXISTS testdb.Calendario_Backup AS SELECT * FROM testdb.Calendario;
+
+CREATE TABLE IF NOT EXISTS testdb.Notificacao_Backup AS SELECT * FROM testdb.Notificacao;
+   
+CREATE TABLE IF NOT EXISTS testdb.Material_Backup AS SELECT * FROM testdb.Material;
+
+CREATE TABLE IF NOT EXISTS testdb.Disciplina_Backup AS SELECT * FROM testdb.Disciplina;
+
+CREATE TABLE IF NOT EXISTS testdb.Aluno_Responsavel_Backup AS SELECT * FROM testdb.Aluno_Responsavel;
+
+#--------------------------
+# Backup tables
+#--------------------------
+
+SELECT * FROM *;
+
+[ ] Criar Select para consultar todos os dados das tabelas. Uma consulta destas por tabela do DER;
+[ ] Criar Select para consultar algum campo das tabelas. Pelo menos 3;
+[ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas. Pelo menos 1;
+[ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas (usando inner join). Pelo menos 1
+

@@ -48,7 +48,7 @@ Scripts:
     [x] Criar, usar, apagar banco de dados;
     [x] Criar, alterar, apagar tabelas;
     [x] Inserir, atualizar, deletar pelo menos 5 registros;
-    [ ] Criar backup das tabelas (ou seja, criar a tabela com estrutura igual e executar o Insert com select). 1 backup para cada tabela;
+    [x] Criar backup das tabelas (ou seja, criar a tabela com estrutura igual e executar o Insert com select). 1 backup para cada tabela;
     [ ] Criar Select para consultar todos os dados das tabelas. Uma consulta destas por tabela do DER;
     [ ] Criar Select para consultar algum campo das tabelas. Pelo menos 3;
     [ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas. Pelo menos 1;
@@ -62,3 +62,20 @@ Scripts:
 Ponto extra:
     [ ] Pode entregar também o material realizado para a outra disciplina que envolve esse tema de projeto. (conta como pontuação adicional);
     [ ] Apenas um integrante do grupo realiza a entrega da atividade. (Não esquecer de informar os nomes dos demais integrantes).
+
+INSERT:
+    [x] Usuário;
+    [x] Administração;
+    [x] Professor;
+    [x] Responsável;
+    [x] Aluno;
+    [x] Turma;
+    [ ] Nota;
+    [ ] FAQ;
+    [ ] Tarefa;
+    [ ] Feedback;
+    [ ] Calendário;
+    [ ] Notificação;
+    [x] Material; 
+    [x] Disciplina;
+    [ ] Aluno-Responsável;
