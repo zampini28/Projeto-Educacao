@@ -299,6 +299,12 @@ BEGIN
 END $$
 DELIMITER ;
 
+
+#--------------------------
+# Stored Procedures
+#--------------------------
+# Pesquisa por nome da turma && pesquisa por usuario de aluno
+
 #--------------------------
 # Inserting new records
 #--------------------------
@@ -482,15 +488,19 @@ BEGIN
 END $$
 DELIMITER ;
 
-
+insert into testdb.Nota (aluno_id, turma_id, nota_final)
+values (1, 2, 3.4), (1, 1, 7.9), (2, 2, 5.3), (2, 1, 3.1), (3, 2, 8.7), (3, 1, 4.5), (4, 2, 6.7), (4, 1, 9.6);
 
 SELECT testdb.Usuario.nome, testdb.Usuario.email, testdb.Aluno.matricula, testdb.Nota.nota_final, testdb.Turma.nome
 FROM testdb.Usuario, testdb.Aluno, testdb.Nota, testdb.Turma
-WHERE testdb.Usuario.id = testdb.Aluno.usuario_id,
-      testdb.Aluno.id = testdb.Nota.aluno_id,
-      testdb.Turma.id = testdb.Nota.turma_id;
+WHERE testdb.Usuario.id = testdb.Aluno.usuario_id
+AND   testdb.Aluno.id = testdb.Nota.aluno_id
+AND   testdb.Turma.id = testdb.Nota.turma_id
+ORDER BY testdb.Usuario.nome;
 
-[ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas. Pelo menos 1;
+
+
+[x] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas. Pelo menos 1;
 [ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas (usando inner join). Pelo menos 1;
 [ ] Criar views. Pelo menos 2 views abrangendo dados das tabelas com filtragem;
 [ ] Criar procedimento e função. Pelo menos 2 de cada, sendo uma com passagem de parâmetro; # Pesquisa por nome da turma && pesquisa por usuario de aluno
