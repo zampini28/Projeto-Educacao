@@ -1,3 +1,4 @@
+SET GLOBAL log_bin_trust_function_creators = 1;
 #--------------------------
 # Start setup
 #--------------------------
@@ -249,6 +250,22 @@ ALTER TABLE testdb.Turma
         REFERENCES testdb.Disciplina (id);
 
 #--------------------------
+# Functions
+#--------------------------
+# Pesquisa por nome da turma
+DELIMITER $$
+CREATE FUNCTION id_turma_pelo_nome(nome_ CHAR(255))
+RETURNS INT
+BEGIN
+	SET @turma_id_ = (SELECT id FROM testdb.Turma WHERE nome=nome_);
+    RETURN @turma_id_;
+END $$
+DELIMITER ; # nao sei se funciona
+
+# pesquisa por usuario de aluno
+
+
+#--------------------------
 # Stored Procedures
 #--------------------------
 DELIMITER $$
@@ -298,12 +315,6 @@ BEGIN
     (DEFAULT, matricula_, cadastrador_id_, (SELECT id FROM testdb.Usuario WHERE usuario=usuario_));
 END $$
 DELIMITER ;
-
-
-#--------------------------
-# Stored Procedures
-#--------------------------
-# Pesquisa por nome da turma && pesquisa por usuario de aluno
 
 #--------------------------
 # Inserting new records
