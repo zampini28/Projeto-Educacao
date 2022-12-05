@@ -705,8 +705,3 @@ SELECT * FROM dados_de_usuario_nao_sensiveis_do_responsavel;
 # [ ] Criar um procedimento para inserção de dados usando commit e rollback conforme exemplificado;
 # [ ] Criar pelo menos 1 trigger. (desafio)
 # [ ] Criar pelo menos 1 select que usa um subselect (desafio)
-
-#FOCAR NO COMMIT & ROLLBACK !!!
-
-#Uma semente caida querem ser plantao
-#Mas olhando pro deserto eu sou apenas um grao
