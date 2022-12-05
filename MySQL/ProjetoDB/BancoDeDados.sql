@@ -472,10 +472,28 @@ SELECT nome FROM testdb.Usuario WHERE id IN
   (SELECT aluno_id FROM testdb.Nota WHERE nota_final >= 3 AND nota_final < 5));
 
 
+DELIMITER 
+CREATE PROCEDURE adicionar_aluno_turma (IN aluno_usuario VARCHAR(255), IN turma_nome VARCHAR(255), IN nota_ INT)
+BEGIN
+    SET aluno_ = (SELECT id FROM testdb.Aluno WHERE usuario=aluno_usuario);
+    SET turma_ = (SELECT id FROM testdb.TurmNa WHERE nome=turma_nome);
+
+    INSERT INTO test.Nota (aluno_id, turma_id, nota_final) VALUES (aluno_, turma_, nota_);
+END $$
+DELIMITER ;
+
+
+
+SELECT testdb.Usuario.nome, testdb.Usuario.email, testdb.Aluno.matricula, testdb.Nota.nota_final, testdb.Turma.nome
+FROM testdb.Usuario, testdb.Aluno, testdb.Nota, testdb.Turma
+WHERE testdb.Usuario.id = testdb.Aluno.usuario_id,
+      testdb.Aluno.id = testdb.Nota.aluno_id,
+      testdb.Turma.id = testdb.Nota.turma_id;
+
 [ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas. Pelo menos 1;
 [ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas (usando inner join). Pelo menos 1;
 [ ] Criar views. Pelo menos 2 views abrangendo dados das tabelas com filtragem;
-[ ] Criar procedimento e função. Pelo menos 2 de cada, sendo uma com passagem de parâmetro;
+[ ] Criar procedimento e função. Pelo menos 2 de cada, sendo uma com passagem de parâmetro; # Pesquisa por nome da turma && pesquisa por usuario de aluno
 [ ] Criar um procedimento para inserção de dados usando commit e rollback conforme exemplificado;
 [ ] Criar pelo menos 1 trigger. (desafio)
 [ ] Criar pelo menos 1 select que usa um subselect (desafio)
