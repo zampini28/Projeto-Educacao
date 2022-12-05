@@ -592,10 +592,8 @@ SELECT disciplina FROM testdb.Disciplina WHERE id IN (SELECT disciplina_id FROM 
 
 SELECT nome FROM testdb.Usuario WHERE id IN 
  (SELECT usuario_id FROM testdb.Aluno WHERE id IN 
-  (SELECT aluno_id FROM testdb.Nota WHERE nota_final >= 3 AND nota_final < 5));
-
-
-
+  (SELECT aluno_id FROM testdb.Nota WHERE nota_final >= 3 AND nota_final < 5)
+);
 
 
 SELECT testdb.Usuario.nome, testdb.Usuario.email, testdb.Aluno.matricula, testdb.Nota.nota_final, testdb.Turma.nome
@@ -624,3 +622,5 @@ SELECT * FROM dados_de_usuario_nao_sensiveis_do_responsavel;
 # [ ] Criar um procedimento para inserção de dados usando commit e rollback conforme exemplificado;
 # [ ] Criar pelo menos 1 trigger. (desafio)
 # [ ] Criar pelo menos 1 select que usa um subselect (desafio)
+
+FOCAR NO COMMIT & ROLLBACK !!!
