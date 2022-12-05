@@ -254,16 +254,37 @@ ALTER TABLE testdb.Turma
 #--------------------------
 # Pesquisa por nome da turma
 DELIMITER $$
-CREATE FUNCTION id_turma_pelo_nome(nome_ CHAR(255))
+CREATE FUNCTION turma_nome_pegar_turma_id(nome_ VARCHAR(255))
 RETURNS INT
 BEGIN
 	SET @turma_id_ = (SELECT id FROM testdb.Turma WHERE nome=nome_);
     RETURN @turma_id_;
 END $$
-DELIMITER ; # nao sei se funciona
 
-# pesquisa por usuario de aluno
+CREATE FUNCTION usuario_pegar_aluno_id(usuario_ VARCHAR(255))
+RETURNS INT
+BEGIN
+    SET @usuario_id_ = (SELECT id FROM testdb.Usuario WHERE usuario=usuario_);
+	SET @aluno_id_ = (SELECT id FROM testdb.Aluno WHERE usuario_id=@usuario_id_);
+    RETURN @aluno_id_;
+END $$
 
+CREATE FUNCTION disciplina_nome_pegar_id(disciplina_ VARCHAR(255))
+RETURNS INT
+BEGIN
+    set @disciplina_id_ = (SELECT id FROM testdb.Disciplina WHERE disciplina=disciplina_);
+
+    return @disciplina_id_;
+END $$
+
+CREATE FUNCTION usuario_pegar_usuario_id(usuario_ VARCHAR(255))
+RETURNS INT
+BEGIN
+    set @usuario_id_ = (SELECT id FROM testdb.Usuario WHERE usuario=usuario_);
+
+    return @usuario_id_;
+END $$
+DELIMITER ;
 
 #--------------------------
 # Stored Procedures
@@ -314,7 +335,14 @@ BEGIN
     INSERT INTO testdb.Aluno VALUES
     (DEFAULT, matricula_, cadastrador_id_, (SELECT id FROM testdb.Usuario WHERE usuario=usuario_));
 END $$
+
+CREATE PROCEDURE adicionar_aluno_turma (IN aluno_ INT, IN turma_ INT)
+BEGIN
+    INSERT INTO testdb.Nota (aluno_id, turma_id) VALUES (aluno_, turma_);
+END $$
 DELIMITER ;
+
+
 
 #--------------------------
 # Inserting new records
@@ -402,20 +430,43 @@ CALL testdb.adicionar_aluno (
  '(11) 98255-7689', 'CarlaCorreiaRocha@gmail.com', 
  'CCrocha', '2008-08-29', 'ahsheiG4oogh', '9425501033029-5', @id_do_cadastrador);
 
-CREATE TABLE IF NOT EXISTS testdb.Nota (
-    id          INT     NOT NULL    AUTO_INCREMENT,
-    aluno_id    INT     NOT NULL,
-    turma_id    INT     NOT NULL,
-    prova       DOUBLE  NULL        DEFAULT NULL,
-    trabalho    DOUBLE  NULL        DEFAULT NULL,
-    nota_final  DOUBLE  NULL        DEFAULT NULL,
-    PRIMARY KEY (id)
-);
+CALL adicionar_aluno_turma(
+    usuario_pegar_aluno_id('LuanaRocha'), 
+    turma_nome_pegar_turma_id('9º ano Português'));
+
+CALL adicionar_aluno_turma(
+    usuario_pegar_aluno_id('LuanaRocha'), 
+    turma_nome_pegar_turma_id('9º ano Ciências'));
+
+CALL adicionar_aluno_turma(
+    usuario_pegar_aluno_id('MFerreira'), 
+    turma_nome_pegar_turma_id('9º ano Português'));
+
+CALL adicionar_aluno_turma(
+    usuario_pegar_aluno_id('MFerreira'), 
+    turma_nome_pegar_turma_id('9º ano Ciências'));
+
+CALL adicionar_aluno_turma(
+    usuario_pegar_aluno_id('LuizSPinto'), 
+    turma_nome_pegar_turma_id('9º ano Português'));
+
+CALL adicionar_aluno_turma(
+    usuario_pegar_aluno_id('LuizSPinto'), 
+    turma_nome_pegar_turma_id('9º ano Ciências'));
+
+CALL adicionar_aluno_turma(
+    usuario_pegar_aluno_id('CCrocha'), 
+    turma_nome_pegar_turma_id('9º ano Português'));
+
+CALL adicionar_aluno_turma(
+    usuario_pegar_aluno_id('CCrocha'), 
+    turma_nome_pegar_turma_id('9º ano Ciências'));
+
 
 # -- UPDATE Professor -- 
 UPDATE testdb.Professor
-SET disciplina_id = (SELECT id FROM testdb.Disciplina WHERE disciplina='Ciências')
-WHERE usuario_id=(SELECT id FROM testdb.Usuario WHERE usuario='JúlioCosta');
+SET disciplina_id = disciplina_nome_pegar_id('Ciências')
+WHERE usuario_id = usuario_pegar_usuario_id('JúlioCosta');
 
 
 # -- DELETE Administrador -- 
@@ -424,43 +475,50 @@ CALL testdb.adicionar_administrador (
  '(11) 96512-7796', 'NicoleSantosCastro@gmail.com',
  'NicoleCastro', '1957-07-08', 'No4nee6zaigh');
 
-DELETE FROM testdb.Administrador WHERE usuario_id=
- (SELECT id FROM testdb.Usuario WHERE usuario='NicoleCastro');
+DELETE FROM testdb.Administrador WHERE usuario_id=  
+ usuario_pegar_usuario_id('NicoleCastro');
 
 DELETE FROM testdb.Usuario WHERE usuario='NicoleCastro';
 
 #--------------------------
 # Backup tables
 #--------------------------
-CREATE TABLE IF NOT EXISTS testdb.Usuario_Backup AS SELECT * FROM testdb.Usuario;
+DELIMITER $$
+CREATE PROCEDURE criar_backup()
+BEGIN
+    CREATE TABLE IF NOT EXISTS testdb.Usuario_Backup AS SELECT * FROM testdb.Usuario;
 
-CREATE TABLE IF NOT EXISTS testdb.Administrador_Backup AS SELECT * FROM testdb.Administrador;
+    CREATE TABLE IF NOT EXISTS testdb.Administrador_Backup AS SELECT * FROM testdb.Administrador;
 
-CREATE TABLE IF NOT EXISTS testdb.Professor_Backup AS SELECT * FROM testdb.Professor;
+    CREATE TABLE IF NOT EXISTS testdb.Professor_Backup AS SELECT * FROM testdb.Professor;
 
-CREATE TABLE IF NOT EXISTS testdb.Responsavel_Backup AS SELECT * FROM testdb.Responsavel;
+    CREATE TABLE IF NOT EXISTS testdb.Responsavel_Backup AS SELECT * FROM testdb.Responsavel;
 
-CREATE TABLE IF NOT EXISTS testdb.Aluno_Backup AS SELECT * FROM testdb.Aluno;
+    CREATE TABLE IF NOT EXISTS testdb.Aluno_Backup AS SELECT * FROM testdb.Aluno;
 
-CREATE TABLE IF NOT EXISTS testdb.Turma_Backup AS SELECT * FROM testdb.Turma;
+    CREATE TABLE IF NOT EXISTS testdb.Turma_Backup AS SELECT * FROM testdb.Turma;
 
-CREATE TABLE IF NOT EXISTS testdb.Nota_Backup AS SELECT * FROM testdb.Nota;
+    CREATE TABLE IF NOT EXISTS testdb.Nota_Backup AS SELECT * FROM testdb.Nota;
 
-CREATE TABLE IF NOT EXISTS testdb.FAQ_Backup AS SELECT * FROM testdb.FAQ;
+    CREATE TABLE IF NOT EXISTS testdb.FAQ_Backup AS SELECT * FROM testdb.FAQ;
 
-CREATE TABLE IF NOT EXISTS testdb.Tarefa_Backup AS SELECT * FROM testdb.Tarefa;
+    CREATE TABLE IF NOT EXISTS testdb.Tarefa_Backup AS SELECT * FROM testdb.Tarefa;
 
-CREATE TABLE IF NOT EXISTS testdb.Feedback_Backup AS SELECT * FROM testdb.Feedback;
+    CREATE TABLE IF NOT EXISTS testdb.Feedback_Backup AS SELECT * FROM testdb.Feedback;
 
-CREATE TABLE IF NOT EXISTS testdb.Calendario_Backup AS SELECT * FROM testdb.Calendario;
+    CREATE TABLE IF NOT EXISTS testdb.Calendario_Backup AS SELECT * FROM testdb.Calendario;
 
-CREATE TABLE IF NOT EXISTS testdb.Notificacao_Backup AS SELECT * FROM testdb.Notificacao;
-   
-CREATE TABLE IF NOT EXISTS testdb.Material_Backup AS SELECT * FROM testdb.Material;
+    CREATE TABLE IF NOT EXISTS testdb.Notificacao_Backup AS SELECT * FROM testdb.Notificacao;
+    
+    CREATE TABLE IF NOT EXISTS testdb.Material_Backup AS SELECT * FROM testdb.Material;
 
-CREATE TABLE IF NOT EXISTS testdb.Disciplina_Backup AS SELECT * FROM testdb.Disciplina;
+    CREATE TABLE IF NOT EXISTS testdb.Disciplina_Backup AS SELECT * FROM testdb.Disciplina;
 
-CREATE TABLE IF NOT EXISTS testdb.Aluno_Responsavel_Backup AS SELECT * FROM testdb.Aluno_Responsavel;
+    CREATE TABLE IF NOT EXISTS testdb.Aluno_Responsavel_Backup AS SELECT * FROM testdb.Aluno_Responsavel;
+END $$
+DELIMITER ;
+
+CALL criar_backup;
 
 #--------------------------
 # SELECT tables
@@ -489,18 +547,8 @@ SELECT nome FROM testdb.Usuario WHERE id IN
   (SELECT aluno_id FROM testdb.Nota WHERE nota_final >= 3 AND nota_final < 5));
 
 
-DELIMITER 
-CREATE PROCEDURE adicionar_aluno_turma (IN aluno_usuario VARCHAR(255), IN turma_nome VARCHAR(255), IN nota_ INT)
-BEGIN
-    SET aluno_ = (SELECT id FROM testdb.Aluno WHERE usuario=aluno_usuario);
-    SET turma_ = (SELECT id FROM testdb.TurmNa WHERE nome=turma_nome);
 
-    INSERT INTO test.Nota (aluno_id, turma_id, nota_final) VALUES (aluno_, turma_, nota_);
-END $$
-DELIMITER ;
 
-insert into testdb.Nota (aluno_id, turma_id, nota_final)
-values (1, 2, 3.4), (1, 1, 7.9), (2, 2, 5.3), (2, 1, 3.1), (3, 2, 8.7), (3, 1, 4.5), (4, 2, 6.7), (4, 1, 9.6);
 
 SELECT testdb.Usuario.nome, testdb.Usuario.email, testdb.Aluno.matricula, testdb.Nota.nota_final, testdb.Turma.nome
 FROM testdb.Usuario, testdb.Aluno, testdb.Nota, testdb.Turma
@@ -511,10 +559,10 @@ ORDER BY testdb.Usuario.nome;
 
 
 
-[x] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas. Pelo menos 1;
-[ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas (usando inner join). Pelo menos 1;
-[ ] Criar views. Pelo menos 2 views abrangendo dados das tabelas com filtragem;
-[ ] Criar procedimento e função. Pelo menos 2 de cada, sendo uma com passagem de parâmetro; # Pesquisa por nome da turma && pesquisa por usuario de aluno
-[ ] Criar um procedimento para inserção de dados usando commit e rollback conforme exemplificado;
-[ ] Criar pelo menos 1 trigger. (desafio)
-[ ] Criar pelo menos 1 select que usa um subselect (desafio)
+# [x] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas. Pelo menos 1;
+# [ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas (usando inner join). Pelo menos 1;
+# [ ] Criar views. Pelo menos 2 views abrangendo dados das tabelas com filtragem;
+# [x] Criar procedimento e função. Pelo menos 2 de cada, sendo uma com passagem de parâmetro;
+# [ ] Criar um procedimento para inserção de dados usando commit e rollback conforme exemplificado;
+# [ ] Criar pelo menos 1 trigger. (desafio)
+# [ ] Criar pelo menos 1 select que usa um subselect (desafio)
