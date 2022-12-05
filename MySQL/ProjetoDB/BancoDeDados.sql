@@ -1,14 +1,23 @@
-SET GLOBAL log_bin_trust_function_creators = 1;
 #--------------------------
 # Start setup
 #--------------------------
+
+# -- Configuration for the functions to work correctly --
+SET GLOBAL log_bin_trust_function_creators = 1;
+SET SQL_SAFE_UPDATES = 0;
+
+# -- DROP database --
 DROP SCHEMA IF EXISTS testdb;
+
+# -- CREATE & USE database --
 CREATE SCHEMA IF NOT EXISTS testdb;
 USE testdb;
 
 #--------------------------
 # Creating tables
 #--------------------------
+
+# -- TABLE Usuario --
 CREATE TABLE IF NOT EXISTS testdb.Usuario (
     id          INT             NOT NULL    AUTO_INCREMENT,
     nome        VARCHAR(255)    NOT NULL,
@@ -24,12 +33,14 @@ CREATE TABLE IF NOT EXISTS testdb.Usuario (
     PRIMARY KEY (id)
 );
 
+# -- TABLE Administrador --
 CREATE TABLE IF NOT EXISTS testdb.Administrador (
     id          INT NOT NULL    AUTO_INCREMENT,
     usuario_id  INT NOT NULL,
     PRIMARY KEY (id)
 );
 
+# -- TABLE Professor --
 CREATE TABLE IF NOT EXISTS testdb.Professor (
     id              INT NOT NULL    AUTO_INCREMENT,
     disciplina_id   INT NOT NULL,
@@ -37,6 +48,7 @@ CREATE TABLE IF NOT EXISTS testdb.Professor (
     PRIMARY KEY (id)
 );
 
+# -- TABLE Responsavel --
 CREATE TABLE IF NOT EXISTS testdb.Responsavel (
     id              INT             NOT NULL    AUTO_INCREMENT,
     cadastrador_id  INT             NOT NULL,
@@ -44,6 +56,7 @@ CREATE TABLE IF NOT EXISTS testdb.Responsavel (
     PRIMARY KEY (id)
 );
 
+# -- TABLE Aluno --
 CREATE TABLE IF NOT EXISTS testdb.Aluno (
     id              INT             NOT NULL    AUTO_INCREMENT,
     matricula       VARCHAR(255)    NOT NULL    UNIQUE,
@@ -52,6 +65,7 @@ CREATE TABLE IF NOT EXISTS testdb.Aluno (
     PRIMARY KEY (id)
 );
 
+# -- TABLE Turma --
 CREATE TABLE IF NOT EXISTS testdb.Turma (
     id  			INT 			NOT NULL	AUTO_INCREMENT,
     nome 			VARCHAR(255)	NOT NULL,
@@ -59,6 +73,7 @@ CREATE TABLE IF NOT EXISTS testdb.Turma (
     PRIMARY KEY (id)
 );
 
+# -- TABLE Nota --
 CREATE TABLE IF NOT EXISTS testdb.Nota (
     id          INT     NOT NULL    AUTO_INCREMENT,
     aluno_id    INT     NOT NULL,
@@ -69,6 +84,7 @@ CREATE TABLE IF NOT EXISTS testdb.Nota (
     PRIMARY KEY (id)
 );
 
+# -- TABLE FAQ --
 CREATE TABLE IF NOT EXISTS testdb.FAQ (
     id                  INT         NOT NULL    AUTO_INCREMENT,
     autor_usuario_id    INT         NOT NULL,
@@ -78,6 +94,7 @@ CREATE TABLE IF NOT EXISTS testdb.FAQ (
     PRIMARY KEY (id)
 );
 
+# -- TABLE Tarefa --
 CREATE TABLE IF NOT EXISTS testdb.Tarefa (
     id          INT             NOT NULL    AUTO_INCREMENT,
     titulo      VARCHAR(255)    NOT NULL,
@@ -89,6 +106,7 @@ CREATE TABLE IF NOT EXISTS testdb.Tarefa (
     PRIMARY KEY (id)
 );
 
+# -- TABLE Feedback --
 CREATE TABLE IF NOT EXISTS testdb.Feedback (
     id          INT             NOT NULL    AUTO_INCREMENT,
     titulo      VARCHAR(255)    NOT NULL,
@@ -97,6 +115,7 @@ CREATE TABLE IF NOT EXISTS testdb.Feedback (
     PRIMARY KEY (id)
 );
 
+# -- TABLE Calendario --
 CREATE TABLE IF NOT EXISTS testdb.Calendario (
     id          INT             NOT NULL    AUTO_INCREMENT,
     titulo      VARCHAR(255)    NOT NULL,
@@ -104,6 +123,7 @@ CREATE TABLE IF NOT EXISTS testdb.Calendario (
     PRIMARY KEY (id)
 );
 
+# -- TABLE Notificacao --
 CREATE TABLE IF NOT EXISTS testdb.Notificacao (
     id          INT NOT NULL    AUTO_INCREMENT,
     aluno_id    INT NOT NULL,
@@ -111,6 +131,7 @@ CREATE TABLE IF NOT EXISTS testdb.Notificacao (
     PRIMARY KEY (id)
 );
 
+# -- TABLE Material --
 CREATE TABLE IF NOT EXISTS testdb.Material (
     id          INT             NOT NULL    AUTO_INCREMENT,
     titulo      VARCHAR(255)    NOT NULL,
@@ -119,12 +140,14 @@ CREATE TABLE IF NOT EXISTS testdb.Material (
     PRIMARY KEY (id)
 );
 
+# -- TABLE Disciplina --
 CREATE TABLE IF NOT EXISTS testdb.Disciplina (
     id          INT             NOT NULL    AUTO_INCREMENT,
     disciplina  VARCHAR(255)    NOT NULL,
     PRIMARY KEY (id)
 );
 
+# -- TABLE Aluno_Responsavel --
 CREATE TABLE IF NOT EXISTS testdb.Aluno_Responsavel (
     id              INT NOT NULL    AUTO_INCREMENT,
     responsavel_id  INT NOT NULL,
@@ -132,6 +155,7 @@ CREATE TABLE IF NOT EXISTS testdb.Aluno_Responsavel (
     PRIMARY KEY (id)
 );
 
+# -- DROP TABLE Analysis -- 
 CREATE TABLE IF NOT EXISTS testdb.Analysis (
     id  INT             NOT NULL    AUTO_INCREMENT  PRIMARY KEY,
     ac  VARCHAR(100)    NOT NULL    DEFAULT '111',
@@ -144,12 +168,15 @@ DROP TABLE testdb.Analysis;
 #--------------------------
 # Adding Foreign Key
 #--------------------------
+
+# -- ALTER TABLE ADD FK Usuario.id -> Administrador -- 
 ALTER TABLE testdb.Administrador
     ADD CONSTRAINT fk_usuario_administrador
         FOREIGN KEY (usuario_id)
         REFERENCES testdb.Usuario (id);
 
 
+# -- ALTER TABLE ADD FK Disciplina.id & Usuario.id -> Professor -- 
 ALTER TABLE testdb.Professor
     ADD CONSTRAINT fk_disciplina_professor
         FOREIGN KEY (disciplina_id)
@@ -160,6 +187,7 @@ ALTER TABLE testdb.Professor
         REFERENCES testdb.Usuario (id);
 
 
+# -- ALTER TABLE ADD FK Administrador.id & Usuario.id -> Responsavel -- 
 ALTER TABLE testdb.Responsavel
     ADD CONSTRAINT fk_administrador_responsavel
         FOREIGN KEY (cadastrador_id)
@@ -170,6 +198,7 @@ ALTER TABLE testdb.Responsavel
         REFERENCES testdb.Usuario (id);
 
 
+# -- ALTER TABLE ADD FK Administrador.id & Usuario.id -> Aluno -- 
 ALTER TABLE testdb.Aluno
     ADD CONSTRAINT fk_administrador_aluno
         FOREIGN KEY (cadastrador_id)
@@ -180,6 +209,13 @@ ALTER TABLE testdb.Aluno
         REFERENCES testdb.Usuario (id);
     
 
+# -- ALTER TABLE ADD FK Disciplina.id -> Turma -- 
+ALTER TABLE testdb.Turma
+	ADD CONSTRAINT fk_disciplina_turma
+		FOREIGN KEY (disciplina_id)
+        REFERENCES testdb.Disciplina (id);
+
+# -- ALTER TABLE ADD FK Aluno.id & Turma.id -> Nota -- 
 ALTER TABLE testdb.Nota
     ADD CONSTRAINT fk_aluno_nota
         FOREIGN KEY (aluno_id)
@@ -190,6 +226,7 @@ ALTER TABLE testdb.Nota
         REFERENCES testdb.Turma (id);
 
 
+# -- ALTER TABLE ADD FK Usuario.id & Turma.id -> FAQ -- 
 ALTER TABLE testdb.FAQ
     ADD CONSTRAINT fk_usuario_faq
         FOREIGN KEY (autor_usuario_id)
@@ -200,24 +237,28 @@ ALTER TABLE testdb.FAQ
         REFERENCES testdb.Turma (id);
 
 
+# -- ALTER TABLE ADD FK Turma.id -> Tarefa -- 
 ALTER TABLE testdb.Tarefa
     ADD CONSTRAINT fk_turma_tarefa
         FOREIGN KEY (turma_id)
         REFERENCES testdb.Turma (id);
 
 
+# -- ALTER TABLE ADD FK Turma.id -> Feedback -- 
 ALTER TABLE testdb.Feedback
     ADD CONSTRAINT fk_turma_feedback
         FOREIGN KEY (turma_id)
         REFERENCES testdb.Turma (id);
 
 
+# -- ALTER TABLE ADD FK Turma.id -> Calendario -- 
 ALTER TABLE testdb.Calendario
     ADD CONSTRAINT fk_turma_calendario
         FOREIGN KEY (turma_id)
         REFERENCES testdb.Turma (id);
 
 
+# -- ALTER TABLE ADD FK Aluno.id & Turma.id -> Notificacao -- 
 ALTER TABLE testdb.Notificacao
     ADD CONSTRAINT fk_aluno_notificacao
         FOREIGN KEY (aluno_id)
@@ -228,12 +269,14 @@ ALTER TABLE testdb.Notificacao
         REFERENCES testdb.Turma (id);
 
 
+# -- ALTER TABLE ADD FK Turma.id -> Material -- 
 ALTER TABLE testdb.Material
     ADD CONSTRAINT fk_turma_material
         FOREIGN KEY (turma_id)
         REFERENCES testdb.Turma (id);
 
 
+# -- ALTER TABLE ADD FK Responsavel.id & Aluno.id -> Aluno_Responsavel -- 
 ALTER TABLE testdb.Aluno_Responsavel
     ADD CONSTRAINT fk_responsavel_alunoresponsavel
         FOREIGN KEY (responsavel_id)
@@ -243,17 +286,12 @@ ALTER TABLE testdb.Aluno_Responsavel
         FOREIGN KEY (aluno_id)
         REFERENCES testdb.Aluno (id);
 
-
-ALTER TABLE testdb.Turma
-	ADD CONSTRAINT fk_disciplina_turma
-		FOREIGN KEY (disciplina_id)
-        REFERENCES testdb.Disciplina (id);
-
 #--------------------------
 # Functions
 #--------------------------
-# Pesquisa por nome da turma
 DELIMITER $$
+
+# -- FUNCTION GET Turma.nome RETURN Turma.id --
 CREATE FUNCTION turma_nome_pegar_turma_id(nome_ VARCHAR(255))
 RETURNS INT
 BEGIN
@@ -261,6 +299,8 @@ BEGIN
     RETURN @turma_id_;
 END $$
 
+
+# -- FUNCTION GET Usuario.usuario RETURN Aluno.id --
 CREATE FUNCTION usuario_pegar_aluno_id(usuario_ VARCHAR(255))
 RETURNS INT
 BEGIN
@@ -269,6 +309,8 @@ BEGIN
     RETURN @aluno_id_;
 END $$
 
+
+# -- FUNCTION GET Disciplina.disciplina RETURN Disciplina.id --
 CREATE FUNCTION disciplina_nome_pegar_id(disciplina_ VARCHAR(255))
 RETURNS INT
 BEGIN
@@ -277,6 +319,8 @@ BEGIN
     return @disciplina_id_;
 END $$
 
+
+# -- FUNCTION GET Usuario.usuario RETURN Usuario.id --
 CREATE FUNCTION usuario_pegar_usuario_id(usuario_ VARCHAR(255))
 RETURNS INT
 BEGIN
@@ -284,12 +328,15 @@ BEGIN
 
     return @usuario_id_;
 END $$
+
 DELIMITER ;
 
 #--------------------------
 # Stored Procedures
 #--------------------------
 DELIMITER $$
+
+# -- PROCEDURE TO INSERT INTO Administrador TABLE --
 CREATE PROCEDURE adicionar_administrador (
  IN nome_ VARCHAR(255), IN rg_ VARCHAR(255), IN cpf_ VARCHAR(255),
  IN n_telefone_ VARCHAR(255), IN email_ VARCHAR(255), IN usuario_ VARCHAR(255),
@@ -301,6 +348,8 @@ BEGIN
     (DEFAULT, (SELECT id FROM testdb.Usuario WHERE usuario=usuario_));
 END $$
 
+
+# -- PROCEDURE TO INSERT INTO Professor TABLE --
 CREATE PROCEDURE adicionar_professor (
  IN nome_ VARCHAR(255), IN rg_ VARCHAR(255), IN cpf_ VARCHAR(255),
  IN n_telefone_ VARCHAR(255), IN email_ VARCHAR(255), IN usuario_ VARCHAR(255),
@@ -313,6 +362,8 @@ BEGIN
     (SELECT id FROM testdb.Usuario WHERE usuario=usuario_));
 END $$
 
+
+# -- PROCEDURE TO INSERT INTO Responsavel TABLE --
 CREATE PROCEDURE adicionar_responsavel (
  IN nome_ VARCHAR(255), IN rg_ VARCHAR(255), IN cpf_ VARCHAR(255),
  IN n_telefone_ VARCHAR(255), IN email_ VARCHAR(255), IN usuario_ VARCHAR(255),
@@ -324,6 +375,8 @@ BEGIN
     (DEFAULT, cadastrador, (SELECT id FROM testdb.Usuario WHERE usuario=usuario_));
 END $$
 
+
+# -- PROCEDURE TO INSERT INTO Aluno TABLE --
 CREATE PROCEDURE adicionar_aluno (
  IN nome_ VARCHAR(255), IN rg_ VARCHAR(255), IN cpf_ VARCHAR(255),
  IN n_telefone_ VARCHAR(255), IN email_ VARCHAR(255), IN usuario_ VARCHAR(255),
@@ -336,34 +389,47 @@ BEGIN
     (DEFAULT, matricula_, cadastrador_id_, (SELECT id FROM testdb.Usuario WHERE usuario=usuario_));
 END $$
 
+
+# -- PROCEDURE TO INSERT INTO Nota TABLE --
 CREATE PROCEDURE adicionar_aluno_turma (IN aluno_ INT, IN turma_ INT)
 BEGIN
     INSERT INTO testdb.Nota (aluno_id, turma_id) VALUES (aluno_, turma_);
 END $$
+
 DELIMITER ;
 
 #--------------------------
 # Views
 #--------------------------
+
+# -- VIEW "Dados de todos usuarios não sensíveis" --
 CREATE VIEW dados_de_usuario_nao_sensiveis AS
 SELECT testdb.Usuario.nome, testdb.Usuario.n_telefone, testdb.Usuario.email, testdb.Usuario.nascimento
 FROM testdb.Usuario;
 
+
+# -- VIEW "Dados de todos alunos não sensíveis" --
 CREATE VIEW dados_de_usuario_nao_sensiveis_do_aluno AS
 SELECT testdb.Usuario.nome, testdb.Usuario.n_telefone, testdb.Usuario.email, testdb.Usuario.nascimento
 FROM testdb.Usuario
 WHERE testdb.Usuario.id IN (SELECT usuario_id FROM testdb.Aluno);
 
+
+# -- VIEW "Dados de todos professores não sensíveis" --
 CREATE VIEW dados_de_usuario_nao_sensiveis_do_professor AS
 SELECT testdb.Usuario.nome, testdb.Usuario.n_telefone, testdb.Usuario.email, testdb.Usuario.nascimento
 FROM testdb.Usuario
 WHERE testdb.Usuario.id IN (SELECT usuario_id FROM testdb.Professor);
 
+
+# -- VIEW "Dados de todos responsáveis não sensíveis" --
 CREATE VIEW dados_de_usuario_nao_sensiveis_do_responsavel AS
 SELECT testdb.Usuario.nome, testdb.Usuario.n_telefone, testdb.Usuario.email, testdb.Usuario.nascimento
 FROM testdb.Usuario
 WHERE testdb.Usuario.id IN (SELECT usuario_id FROM testdb.Responsavel);
 
+
+# -- VIEW "Dados de todos administrador não sensíveis" --
 CREATE VIEW dados_de_usuario_nao_sensiveis_do_administrador AS
 SELECT testdb.Usuario.nome, testdb.Usuario.n_telefone, testdb.Usuario.email, testdb.Usuario.nascimento
 FROM testdb.Usuario
@@ -372,6 +438,8 @@ WHERE testdb.Usuario.id IN (SELECT usuario_id FROM testdb.Administrador);
 #--------------------------
 # Inserting new records
 #--------------------------
+
+# -- Cadastrador's ID -- 
 SET @id_do_cadastrador = 1;
 
 # -- INSERT Disciplina --
@@ -478,6 +546,8 @@ CALL testdb.adicionar_aluno (
  '(11) 98255-7689', 'CarlaCorreiaRocha@gmail.com', 
  'CCrocha', '2008-08-29', 'ahsheiG4oogh', '9425501033029-5', @id_do_cadastrador);
 
+
+# -- INSERT Aluno INTO Turma --
 CALL adicionar_aluno_turma(
     usuario_pegar_aluno_id('LuanaRocha'), 
     turma_nome_pegar_turma_id('9º ano Português'));
@@ -515,7 +585,6 @@ CALL adicionar_aluno_turma(
 UPDATE testdb.Professor
 SET disciplina_id = disciplina_nome_pegar_id('Ciências')
 WHERE usuario_id = usuario_pegar_usuario_id('JúlioCosta');
-
 
 # -- DELETE Administrador -- 
 CALL testdb.adicionar_administrador (
@@ -569,7 +638,7 @@ DELIMITER ;
 CALL criar_backup;
 
 #--------------------------
-# SELECT tables
+# SELECT ALL tables
 #--------------------------
 SELECT * FROM testdb.Usuario;
 SELECT * FROM testdb.Administrador;
@@ -586,16 +655,26 @@ SELECT * FROM testdb.Material;
 SELECT * FROM testdb.Disciplina;
 SELECT * FROM testdb.Aluno_Responsavel;
 
-SELECT nome, n_telefone, email, nascimento FROM testdb.Usuario WHERE id IN (SELECT usuario_id FROM testdb.Aluno);
+#--------------------------
+# SELECT WITH FITER tables
+#--------------------------
 
+# -- SELECT Aluno_Usuario MULTIPLE ROWS -- 
+SELECT id, nome, cpf, usuario, cadastrador FROM testdb.Usuario WHERE id IN (SELECT usuario_id FROM testdb.Aluno);
+
+
+# -- SELECT DISCIPLINA THAT HAS TEACHER --
 SELECT disciplina FROM testdb.Disciplina WHERE id IN (SELECT disciplina_id FROM testdb.Professor);
 
+
+# -- SELECT ALUNO THAT GOT FINAL GRADE BETWEEN 3 AND 5 (recuperation) --
 SELECT nome FROM testdb.Usuario WHERE id IN 
  (SELECT usuario_id FROM testdb.Aluno WHERE id IN 
-  (SELECT aluno_id FROM testdb.Nota WHERE nota_final >= 3 AND nota_final < 5)
+  (SELECT aluno_id FROM testdb.Nota WHERE nota_final BETWEEN 3 AND 5)
 );
 
 
+# -- SELECT Aluno nome, email, matricula, nota final, nome da turma FROM FOUR TABLES --
 SELECT testdb.Usuario.nome, testdb.Usuario.email, testdb.Aluno.matricula, testdb.Nota.nota_final, testdb.Turma.nome
 FROM testdb.Usuario, testdb.Aluno, testdb.Nota, testdb.Turma
 WHERE testdb.Usuario.id = testdb.Aluno.usuario_id
@@ -603,14 +682,18 @@ AND   testdb.Aluno.id = testdb.Nota.aluno_id
 AND   testdb.Turma.id = testdb.Nota.turma_id
 ORDER BY testdb.Usuario.nome;
 
+
+# -- SELECT Disciplina.disciplina AND THE Turma.nome THAT HAS THIS SUBJECT --
 SELECT testdb.Disciplina.disciplina, testdb.Turma.nome
 FROM testdb.Disciplina
 INNER JOIN testdb.Turma
 ON testdb.Disciplina.id = testdb.Turma.disciplina_id;
 
-
+#--------------------------
+# SELECT WITH VIEW tables
+#--------------------------
 SELECT * FROM dados_de_usuario_nao_sensiveis;
-SELECT * FROM dados_de_usuario_nao_sensiveis_do_administrador
+SELECT * FROM dados_de_usuario_nao_sensiveis_do_administrador;
 SELECT * FROM dados_de_usuario_nao_sensiveis_do_aluno;
 SELECT * FROM dados_de_usuario_nao_sensiveis_do_professor;
 SELECT * FROM dados_de_usuario_nao_sensiveis_do_responsavel;
@@ -623,4 +706,7 @@ SELECT * FROM dados_de_usuario_nao_sensiveis_do_responsavel;
 # [ ] Criar pelo menos 1 trigger. (desafio)
 # [ ] Criar pelo menos 1 select que usa um subselect (desafio)
 
-FOCAR NO COMMIT & ROLLBACK !!!
+#FOCAR NO COMMIT & ROLLBACK !!!
+
+#Uma semente caida querem ser plantao
+#Mas olhando pro deserto eu sou apenas um grao
