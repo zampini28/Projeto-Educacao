@@ -342,7 +342,32 @@ BEGIN
 END $$
 DELIMITER ;
 
+#--------------------------
+# Views
+#--------------------------
+CREATE VIEW dados_de_usuario_nao_sensiveis AS
+SELECT testdb.Usuario.nome, testdb.Usuario.n_telefone, testdb.Usuario.email, testdb.Usuario.nascimento
+FROM testdb.Usuario;
 
+CREATE VIEW dados_de_usuario_nao_sensiveis_do_aluno AS
+SELECT testdb.Usuario.nome, testdb.Usuario.n_telefone, testdb.Usuario.email, testdb.Usuario.nascimento
+FROM testdb.Usuario
+WHERE testdb.Usuario.id IN (SELECT usuario_id FROM testdb.Aluno);
+
+CREATE VIEW dados_de_usuario_nao_sensiveis_do_professor AS
+SELECT testdb.Usuario.nome, testdb.Usuario.n_telefone, testdb.Usuario.email, testdb.Usuario.nascimento
+FROM testdb.Usuario
+WHERE testdb.Usuario.id IN (SELECT usuario_id FROM testdb.Professor);
+
+CREATE VIEW dados_de_usuario_nao_sensiveis_do_responsavel AS
+SELECT testdb.Usuario.nome, testdb.Usuario.n_telefone, testdb.Usuario.email, testdb.Usuario.nascimento
+FROM testdb.Usuario
+WHERE testdb.Usuario.id IN (SELECT usuario_id FROM testdb.Responsavel);
+
+CREATE VIEW dados_de_usuario_nao_sensiveis_do_administrador AS
+SELECT testdb.Usuario.nome, testdb.Usuario.n_telefone, testdb.Usuario.email, testdb.Usuario.nascimento
+FROM testdb.Usuario
+WHERE testdb.Usuario.id IN (SELECT usuario_id FROM testdb.Administrador);
 
 #--------------------------
 # Inserting new records
@@ -360,10 +385,33 @@ VALUES
 # -- INSERT Turma --
 INSERT INTO testdb.Turma
  (nome, disciplina_id)
-VALUES
-	('9º ano Português', (SELECT id FROM testdb.Disciplina WHERE disciplina='Língua Portuguesa')),
-    ('9º ano Ciências', (SELECT id FROM testdb.Disciplina WHERE disciplina='Ciências'));
+VALUES 
+	('9º ano Português',disciplina_nome_pegar_id('Língua Portuguesa')),
+    ('9º ano Matemática',disciplina_nome_pegar_id('Matemática')),
+    ('9º ano História',disciplina_nome_pegar_id('História')),
+    ('9º ano Geografia',disciplina_nome_pegar_id('Geografia')),
+    ('9º ano Ciências', disciplina_nome_pegar_id('Ciências')),
+    ('9º ano Artes', disciplina_nome_pegar_id('Artes')),
+    ('9º ano Educação Física', disciplina_nome_pegar_id('Educação Física')),
+    ('9º ano Inglês', disciplina_nome_pegar_id('Inglês')),
 
+	('8º ano Português',disciplina_nome_pegar_id('Língua Portuguesa')),
+    ('8º ano Matemática',disciplina_nome_pegar_id('Matemática')),
+    ('8º ano História',disciplina_nome_pegar_id('História')),
+    ('8º ano Geografia',disciplina_nome_pegar_id('Geografia')),
+    ('8º ano Ciências', disciplina_nome_pegar_id('Ciências')),
+    ('8º ano Artes', disciplina_nome_pegar_id('Artes')),
+    ('8º ano Educação Física', disciplina_nome_pegar_id('Educação Física')),
+    ('8º ano Inglês', disciplina_nome_pegar_id('Inglês')),
+
+    ('7º ano Português',disciplina_nome_pegar_id('Língua Portuguesa')),
+    ('7º ano Matemática',disciplina_nome_pegar_id('Matemática')),
+    ('7º ano História',disciplina_nome_pegar_id('História')),
+    ('7º ano Geografia',disciplina_nome_pegar_id('Geografia')),
+    ('7º ano Ciências', disciplina_nome_pegar_id('Ciências')),
+    ('7º ano Artes', disciplina_nome_pegar_id('Artes')),
+    ('7º ano Educação Física', disciplina_nome_pegar_id('Educação Física')),
+    ('7º ano Inglês', disciplina_nome_pegar_id('Inglês'));
 
 # -- INSERT Material --
 INSERT INTO testdb.Material
@@ -557,11 +605,21 @@ AND   testdb.Aluno.id = testdb.Nota.aluno_id
 AND   testdb.Turma.id = testdb.Nota.turma_id
 ORDER BY testdb.Usuario.nome;
 
+SELECT testdb.Disciplina.disciplina, testdb.Turma.nome
+FROM testdb.Disciplina
+INNER JOIN testdb.Turma
+ON testdb.Disciplina.id = testdb.Turma.disciplina_id;
 
+
+SELECT * FROM dados_de_usuario_nao_sensiveis;
+SELECT * FROM dados_de_usuario_nao_sensiveis_do_administrador
+SELECT * FROM dados_de_usuario_nao_sensiveis_do_aluno;
+SELECT * FROM dados_de_usuario_nao_sensiveis_do_professor;
+SELECT * FROM dados_de_usuario_nao_sensiveis_do_responsavel;
 
 # [x] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas. Pelo menos 1;
-# [ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas (usando inner join). Pelo menos 1;
-# [ ] Criar views. Pelo menos 2 views abrangendo dados das tabelas com filtragem;
+# [x] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas (usando inner join). Pelo menos 1;
+# [x] Criar views. Pelo menos 2 views abrangendo dados das tabelas com filtragem;
 # [x] Criar procedimento e função. Pelo menos 2 de cada, sendo uma com passagem de parâmetro;
 # [ ] Criar um procedimento para inserção de dados usando commit e rollback conforme exemplificado;
 # [ ] Criar pelo menos 1 trigger. (desafio)
