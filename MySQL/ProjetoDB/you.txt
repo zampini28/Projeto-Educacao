@@ -1,0 +1,10 @@
+Scripts:
+    [x] Criar Select para consultar todos os dados das tabelas. Uma consulta destas por tabela do DER;
+    [x] Criar Select para consultar algum campo das tabelas. Pelo menos 3;
+    [ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas. Pelo menos 1;
+    [ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas (usando inner join). Pelo menos 1;
+    [ ] Criar views. Pelo menos 2 views abrangendo dados das tabelas com filtragem;
+    [ ] Criar procedimento e função. Pelo menos 2 de cada, sendo uma com passagem de parâmetro;
+    [ ] Criar um procedimento para inserção de dados usando commit e rollback conforme exemplificado;
+    [ ] Criar pelo menos 1 trigger. (desafio)
+    [ ] Criar pelo menos 1 select que usa um subselect (desafio)

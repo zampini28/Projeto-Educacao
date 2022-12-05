@@ -446,13 +446,36 @@ CREATE TABLE IF NOT EXISTS testdb.Disciplina_Backup AS SELECT * FROM testdb.Disc
 CREATE TABLE IF NOT EXISTS testdb.Aluno_Responsavel_Backup AS SELECT * FROM testdb.Aluno_Responsavel;
 
 #--------------------------
-# Backup tables
+# SELECT tables
 #--------------------------
+SELECT * FROM testdb.Usuario;
+SELECT * FROM testdb.Administrador;
+SELECT * FROM testdb.Professor;
+SELECT * FROM testdb.Aluno;
+SELECT * FROM testdb.Turma;
+SELECT * FROM testdb.Nota;
+SELECT * FROM testdb.FAQ;
+SELECT * FROM testdb.Tarefa;
+SELECT * FROM testdb.Feedback;
+SELECT * FROM testdb.Calendario;
+SELECT * FROM testdb.Notificacao;
+SELECT * FROM testdb.Material;
+SELECT * FROM testdb.Disciplina;
+SELECT * FROM testdb.Aluno_Responsavel;
 
-SELECT * FROM *;
+SELECT nome, n_telefone, email, nascimento FROM testdb.Usuario WHERE id IN (SELECT usuario_id FROM testdb.Aluno);
 
-[ ] Criar Select para consultar todos os dados das tabelas. Uma consulta destas por tabela do DER;
-[ ] Criar Select para consultar algum campo das tabelas. Pelo menos 3;
+SELECT disciplina FROM testdb.Disciplina WHERE id IN (SELECT disciplina_id FROM testdb.Professor);
+
+SELECT nome FROM testdb.Usuario WHERE id IN 
+ (SELECT usuario_id FROM testdb.Aluno WHERE id IN 
+  (SELECT aluno_id FROM testdb.Nota WHERE nota_final >= 3 AND nota_final < 5));
+
+
 [ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas. Pelo menos 1;
-[ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas (usando inner join). Pelo menos 1
-
+[ ] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas (usando inner join). Pelo menos 1;
+[ ] Criar views. Pelo menos 2 views abrangendo dados das tabelas com filtragem;
+[ ] Criar procedimento e função. Pelo menos 2 de cada, sendo uma com passagem de parâmetro;
+[ ] Criar um procedimento para inserção de dados usando commit e rollback conforme exemplificado;
+[ ] Criar pelo menos 1 trigger. (desafio)
+[ ] Criar pelo menos 1 select que usa um subselect (desafio)
