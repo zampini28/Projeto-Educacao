@@ -56,7 +56,7 @@ Scripts:
     [x] Criar views. Pelo menos 2 views abrangendo dados das tabelas com filtragem;
     [x] Criar procedimento e função. Pelo menos 2 de cada, sendo uma com passagem de parâmetro;
     [x] Criar um procedimento para inserção de dados usando commit e rollback conforme exemplificado;
-    [ ] Criar pelo menos 1 trigger. (desafio)
+    [ ] Criar pelo menos 1 trigger. (desafio) --> Adcionar nota final na tabela nota automaticamente && Adcionar nota da tarefa automaticamente nas tabelas notas;
     [ ] Criar pelo menos 1 select que usa um subselect (desafio)
 
 Ponto extra:

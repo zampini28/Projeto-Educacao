@@ -660,7 +660,7 @@ SELECT * FROM testdb.Aluno_Responsavel;
 #--------------------------
 
 # -- SELECT Aluno_Usuario MULTIPLE ROWS -- 
-SELECT id, nome, cpf, usuario, cadastrador FROM testdb.Usuario WHERE id IN (SELECT usuario_id FROM testdb.Aluno);
+SELECT id, nome, cpf, usuario, cadastro FROM testdb.Usuario WHERE id IN (SELECT usuario_id FROM testdb.Aluno);
 
 
 # -- SELECT DISCIPLINA THAT HAS TEACHER --
@@ -698,10 +698,35 @@ SELECT * FROM dados_de_usuario_nao_sensiveis_do_aluno;
 SELECT * FROM dados_de_usuario_nao_sensiveis_do_professor;
 SELECT * FROM dados_de_usuario_nao_sensiveis_do_responsavel;
 
+#--------------------------
+# TRANSACTION COMMIT & ROLLBACK
+#--------------------------
+
+# -- TYPO ERROR --
+start transaction;
+
+update testdb.Usuario set testdb.Usuario.n_telefone = '(11) 93248-7177' 
+where id > usuario_pegar_usuario_id('JúlioCosta');
+
+select * from testdb.Usuario;
+
+rollback;
+
+select * from testdb.Usuario;
+
+update testdb.Usuario set testdb.Usuario.n_telefone = '(11) 93248-7177' 
+where id = usuario_pegar_usuario_id('JúlioCosta');
+
+select * from testdb.Usuario;
+
+commit;
+
 # [x] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas. Pelo menos 1;
 # [x] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas (usando inner join). Pelo menos 1;
 # [x] Criar views. Pelo menos 2 views abrangendo dados das tabelas com filtragem;
 # [x] Criar procedimento e função. Pelo menos 2 de cada, sendo uma com passagem de parâmetro;
-# [ ] Criar um procedimento para inserção de dados usando commit e rollback conforme exemplificado;
-# [ ] Criar pelo menos 1 trigger. (desafio)
+# [x] Criar um procedimento para inserção de dados usando commit e rollback conforme exemplificado;
+# [ ] Criar pelo menos 1 trigger. (desafio) --> Adcionar nota final na tabela nota automaticamente && Adcionar nota da tarefa automaticamente nas tabelas notas;
 # [ ] Criar pelo menos 1 select que usa um subselect (desafio)
+
+# Ninguém fiscaliza o trabalho individual dos voluntários. Existe a confiança que cada um esteja fazendo o melhor
