@@ -117,17 +117,19 @@ CREATE TABLE IF NOT EXISTS testdb.Feedback (
 
 # -- TABLE Calendario --
 CREATE TABLE IF NOT EXISTS testdb.Calendario (
-    id          INT             NOT NULL    AUTO_INCREMENT,
-    titulo      VARCHAR(255)    NOT NULL,
-    turma_id    INT             NOT NULL,
+    id                  INT             NOT NULL    AUTO_INCREMENT,
+    titulo              VARCHAR(255)    NOT NULL,
+    link                VARCHAR(255)    NOT NULL,
+    administrador_id    INT             NOT NULL,
     PRIMARY KEY (id)
 );
 
 # -- TABLE Notificacao --
 CREATE TABLE IF NOT EXISTS testdb.Notificacao (
-    id          INT NOT NULL    AUTO_INCREMENT,
-    aluno_id    INT NOT NULL,
-    turma_id    INT NOT NULL,
+    id          INT             NOT NULL    AUTO_INCREMENT,
+    conteudo    VARCHAR(255)    NOT NULL,
+    aluno_id    INT             NOT NULL,
+    turma_id    INT             NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -253,9 +255,9 @@ ALTER TABLE testdb.Feedback
 
 # -- ALTER TABLE ADD FK Turma.id -> Calendario -- 
 ALTER TABLE testdb.Calendario
-    ADD CONSTRAINT fk_turma_calendario
-        FOREIGN KEY (turma_id)
-        REFERENCES testdb.Turma (id);
+    ADD CONSTRAINT fk_administrador_calendario
+        FOREIGN KEY (administrador_id)
+        REFERENCES testdb.Administrador (id);
 
 
 # -- ALTER TABLE ADD FK Aluno.id & Turma.id -> Notificacao -- 
@@ -329,6 +331,15 @@ BEGIN
     return @usuario_id_;
 END $$
 
+# -- FUNCTION GET Usuario.usuario RETURN Responsavel.id --
+CREATE FUNCTION usuario_pegar_responsavel_id(usuario_ VARCHAR(255))
+RETURNS INT
+BEGIN
+    set @responsavel_ = (SELECT id FROM testdb.Responsavel WHERE usuario_id=(SELECT id FROM testdb.Usuario WHERE usuario=usuario_));
+
+    return @usuario_id_;
+END $$
+
 DELIMITER ;
 
 #--------------------------
@@ -394,6 +405,13 @@ END $$
 CREATE PROCEDURE adicionar_aluno_turma (IN aluno_ INT, IN turma_ INT)
 BEGIN
     INSERT INTO testdb.Nota (aluno_id, turma_id) VALUES (aluno_, turma_);
+END $$
+
+# -- PROCEDURE TO INSERT INTO aluno_responsavel TABLE --
+CREATE PROCEDURE adicionar_relacao_aluno_responsavel (IN aluno_ INT, IN responsavel_ INT)
+BEGIN
+    INSERT INTO testdb.Aluno_Responsavel (aluno_id, responsavel_id) VALUES
+        (aluno_, responsavel_);
 END $$
 
 DELIMITER ;
@@ -563,6 +581,24 @@ CALL testdb.adicionar_aluno (
  'CCrocha', '2008-08-29', 'ahsheiG4oogh', '9425501033029-5', @id_do_cadastrador);
 
 
+# -- INSERT Aluno & Responsavel --
+CALL adicionar_relacao_aluno_responsavel (
+    usuario_pegar_aluno_id('LuanaRocha'),
+    usuario_pegar_responsavel_id('Breno_Fernandes'));
+
+CALL adicionar_relacao_aluno_responsavel (
+    usuario_pegar_aluno_id('MFerreira'),
+    usuario_pegar_responsavel_id('DanielAraujo_Carvalho'));
+
+CALL adicionar_relacao_aluno_responsavel (
+    usuario_pegar_aluno_id('LuizSPinto'),
+    usuario_pegar_responsavel_id('Mariana.S.Rocha'));
+
+ CALL adicionar_relacao_aluno_responsavel (       
+    usuario_pegar_aluno_id('CCrocha'),
+    usuario_pegar_responsavel_id('Mariana.S.Rocha'));
+
+
 # -- INSERT Aluno INTO Turma --
 CALL adicionar_aluno_turma(
     usuario_pegar_aluno_id('LuanaRocha'), 
@@ -666,6 +702,17 @@ INSERT INTO testdb.FAQ (autor_usuario_id, conteudo, turma_id) VALUES
 INSERT INTO testdb.Feedback (titulo, turma_id) VALUES
  ('Por favor! Prestem mais atenção na aula.', turma_nome_pegar_turma_id('9º ano Ciências')),
  ('Legal turma! Absorveram bem os conceitos!', turma_nome_pegar_turma_id('9º ano Português'));
+
+
+# -- INSERT Calendário --
+INSERT INTO testdb.Calendario (titulo, link, administrador_id) VALUES
+ ('Calendário 2022 - Aulas e Atividade Extras', 'https://projetoeducacao.com.br/calendario', 1);
+
+
+# -- INSERT Notificação --
+INSERT INTO testdb.Notificacao (aluno_id, conteudo, turma_id) VALUES
+ (usuario_pegar_aluno_id('MFerreira'), 'Por favor, comparecer a secretaria!', turma_nome_pegar_turma_id('9º ano Português' )),
+ (usuario_pegar_aluno_id('LuizSPinto'), 'Atenção, sua prova de recuperação é amanhã!', turma_nome_pegar_turma_id('9º ano Ciências'));
 
 
 # -- UPDATE Professor -- 
@@ -809,10 +856,3 @@ select * from testdb.Usuario;
 
 commit;
 
-
-
-
-#   [ ] Calendário;
-#   [ ] Notificação;
-#   [ ] Aluno-Responsável;
-	<-- TABS
