@@ -342,7 +342,7 @@ CREATE PROCEDURE adicionar_administrador (
  IN n_telefone_ VARCHAR(255), IN email_ VARCHAR(255), IN usuario_ VARCHAR(255),
  IN nascimento_ VARCHAR(255), IN senha_ VARCHAR(255))
 BEGIN
-	INSERT INTO testdb.Usuario VALUES 
+    INSERT INTO testdb.Usuario VALUES 
     (DEFAULT, nome_, rg_, cpf_, n_telefone_, email_, usuario_, nascimento_, DEFAULT, DEFAULT, senha_);
     INSERT INTO testdb.Administrador VALUES
     (DEFAULT, (SELECT id FROM testdb.Usuario WHERE usuario=usuario_));
@@ -355,7 +355,7 @@ CREATE PROCEDURE adicionar_professor (
  IN n_telefone_ VARCHAR(255), IN email_ VARCHAR(255), IN usuario_ VARCHAR(255),
  IN nascimento_ VARCHAR(255), IN senha_ VARCHAR(255), IN disciplina_ VARCHAR(255))
 BEGIN
-	INSERT INTO testdb.Usuario VALUES 
+    INSERT INTO testdb.Usuario VALUES 
     (DEFAULT, nome_, rg_, cpf_, n_telefone_, email_, usuario_, nascimento_, DEFAULT, DEFAULT, senha_);
     INSERT INTO testdb.Professor VALUES
     (DEFAULT, (SELECT id FROM testdb.Disciplina WHERE disciplina=disciplina_), 
@@ -369,7 +369,7 @@ CREATE PROCEDURE adicionar_responsavel (
  IN n_telefone_ VARCHAR(255), IN email_ VARCHAR(255), IN usuario_ VARCHAR(255),
  IN nascimento_ VARCHAR(255), IN senha_ VARCHAR(255), IN cadastrador INT)
 BEGIN
-	INSERT INTO testdb.Usuario VALUES 
+    INSERT INTO testdb.Usuario VALUES 
     (DEFAULT, nome_, rg_, cpf_, n_telefone_, email_, usuario_, nascimento_, DEFAULT, DEFAULT, senha_);
     INSERT INTO testdb.Responsavel VALUES
     (DEFAULT, cadastrador, (SELECT id FROM testdb.Usuario WHERE usuario=usuario_));
@@ -383,7 +383,7 @@ CREATE PROCEDURE adicionar_aluno (
  IN nascimento_ VARCHAR(255), IN senha_ VARCHAR(255), IN matricula_ VARCHAR(255), 
  IN cadastrador_id_ INT)
 BEGIN
-	INSERT INTO testdb.Usuario VALUES 
+    INSERT INTO testdb.Usuario VALUES 
     (DEFAULT, nome_, rg_, cpf_, n_telefone_, email_, usuario_, nascimento_, DEFAULT, DEFAULT, senha_);
     INSERT INTO testdb.Aluno VALUES
     (DEFAULT, matricula_, cadastrador_id_, (SELECT id FROM testdb.Usuario WHERE usuario=usuario_));
@@ -436,6 +436,22 @@ FROM testdb.Usuario
 WHERE testdb.Usuario.id IN (SELECT usuario_id FROM testdb.Administrador);
 
 #--------------------------
+# TRIGGER
+#--------------------------
+DELIMITER $$
+
+CREATE TRIGGER soma_de_nota_final BEFORE UPDATE ON testdb.Nota FOR EACH ROW
+BEGIN
+    SET @nota_final_ = NEW.trabalho + NEW.prova;
+
+    IF new.nota_final <> @nota_final_ OR NEW.nota_final IS NULL THEN
+        SET NEW.nota_final = @nota_final_;
+    END IF; 
+END $$
+
+DELIMITER ;
+
+#--------------------------
 # Inserting new records
 #--------------------------
 
@@ -454,7 +470,7 @@ VALUES
 INSERT INTO testdb.Turma
  (nome, disciplina_id)
 VALUES 
-	('9º ano Português',disciplina_nome_pegar_id('Língua Portuguesa')),
+    ('9º ano Português',disciplina_nome_pegar_id('Língua Portuguesa')),
     ('9º ano Matemática',disciplina_nome_pegar_id('Matemática')),
     ('9º ano História',disciplina_nome_pegar_id('História')),
     ('9º ano Geografia',disciplina_nome_pegar_id('Geografia')),
@@ -463,7 +479,7 @@ VALUES
     ('9º ano Educação Física', disciplina_nome_pegar_id('Educação Física')),
     ('9º ano Inglês', disciplina_nome_pegar_id('Inglês')),
 
-	('8º ano Português',disciplina_nome_pegar_id('Língua Portuguesa')),
+    ('8º ano Português',disciplina_nome_pegar_id('Língua Portuguesa')),
     ('8º ano Matemática',disciplina_nome_pegar_id('Matemática')),
     ('8º ano História',disciplina_nome_pegar_id('História')),
     ('8º ano Geografia',disciplina_nome_pegar_id('Geografia')),
