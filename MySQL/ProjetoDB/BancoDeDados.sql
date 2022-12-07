@@ -804,7 +804,8 @@ select * from testdb.Usuario;
 commit;
 
 
-
+INSERT INTO testdb.Feedback (titulo, turma_id) VALUES
+ ('', turma_nome_pegar_turma_id('9º ano Português'));
 
 #   [ ] Feedback;
 #   [ ] Calendário;
