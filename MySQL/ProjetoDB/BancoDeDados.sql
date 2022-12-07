@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS testdb.Usuario (
     cpf         VARCHAR(255)    NOT NULL,
     n_telefone  VARCHAR(255)    NULL        DEFAULT NULL,
     email       VARCHAR(255)    NOT NULL,
-    usuario     VARCHAR(255)    NOT NULL	UNIQUE,
+    usuario     VARCHAR(255)    NOT NULL    UNIQUE,
     nascimento  DATE            NOT NULL,
     cadastro    DATETIME        NOT NULL    DEFAULT CURRENT_TIMESTAMP(),
     bloqueado   TINYINT         NOT NULL    DEFAULT 0,
@@ -50,9 +50,9 @@ CREATE TABLE IF NOT EXISTS testdb.Professor (
 
 # -- TABLE Responsavel --
 CREATE TABLE IF NOT EXISTS testdb.Responsavel (
-    id              INT             NOT NULL    AUTO_INCREMENT,
-    cadastrador_id  INT             NOT NULL,
-    usuario_id      INT             NOT NULL,
+    id              INT NOT NULL    AUTO_INCREMENT,
+    cadastrador_id  INT NOT NULL,
+    usuario_id      INT NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -67,9 +67,9 @@ CREATE TABLE IF NOT EXISTS testdb.Aluno (
 
 # -- TABLE Turma --
 CREATE TABLE IF NOT EXISTS testdb.Turma (
-    id  			INT 			NOT NULL	AUTO_INCREMENT,
-    nome 			VARCHAR(255)	NOT NULL,
-    disciplina_id	INT				NOT NULL,
+    id              INT             NOT NULL    AUTO_INCREMENT,
+    nome            VARCHAR(255)    NOT NULL,
+    disciplina_id   INT             NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -211,8 +211,8 @@ ALTER TABLE testdb.Aluno
 
 # -- ALTER TABLE ADD FK Disciplina.id -> Turma -- 
 ALTER TABLE testdb.Turma
-	ADD CONSTRAINT fk_disciplina_turma
-		FOREIGN KEY (disciplina_id)
+    ADD CONSTRAINT fk_disciplina_turma
+        FOREIGN KEY (disciplina_id)
         REFERENCES testdb.Disciplina (id);
 
 # -- ALTER TABLE ADD FK Aluno.id & Turma.id -> Nota -- 
@@ -295,7 +295,7 @@ DELIMITER $$
 CREATE FUNCTION turma_nome_pegar_turma_id(nome_ VARCHAR(255))
 RETURNS INT
 BEGIN
-	SET @turma_id_ = (SELECT id FROM testdb.Turma WHERE nome=nome_);
+    SET @turma_id_ = (SELECT id FROM testdb.Turma WHERE nome=nome_);
     RETURN @turma_id_;
 END $$
 
@@ -305,7 +305,7 @@ CREATE FUNCTION usuario_pegar_aluno_id(usuario_ VARCHAR(255))
 RETURNS INT
 BEGIN
     SET @usuario_id_ = (SELECT id FROM testdb.Usuario WHERE usuario=usuario_);
-	SET @aluno_id_ = (SELECT id FROM testdb.Aluno WHERE usuario_id=@usuario_id_);
+    SET @aluno_id_ = (SELECT id FROM testdb.Aluno WHERE usuario_id=@usuario_id_);
     RETURN @aluno_id_;
 END $$
 
@@ -442,7 +442,7 @@ DELIMITER $$
 
 CREATE TRIGGER soma_de_nota_final BEFORE UPDATE ON testdb.Nota FOR EACH ROW
 BEGIN
-    SET @nota_final_ = NEW.trabalho + NEW.prova;
+    SET @nota_final_ = TRUNCATE((NEW.trabalho * 0.6) + (NEW.prova * 0.4), 1);
 
     IF new.nota_final <> @nota_final_ OR NEW.nota_final IS NULL THEN
         SET NEW.nota_final = @nota_final_;
@@ -503,7 +503,7 @@ INSERT INTO testdb.Material
 VALUES
  ('Exercícios de interpretação', (SELECT id FROM testdb.Turma WHERE nome='9º ano Português')),
  ('Ciclo da água e tratamento da água', (SELECT id FROM testdb.Turma WHERE nome='9º ano Ciências')),
- ('Papel dos microorganismos na produção de alimentos', (SELECT id FROM testdb.Turma WHERE nome='9º ano Ciências'));
+ ('Papel dos microrganismos na produção de alimentos', (SELECT id FROM testdb.Turma WHERE nome='9º ano Ciências'));
 
 
 # -- INSERT Administrador --
@@ -596,11 +596,77 @@ CALL adicionar_aluno_turma(
     usuario_pegar_aluno_id('CCrocha'), 
     turma_nome_pegar_turma_id('9º ano Ciências'));
 
+# -- UPDATE Nota --
+UPDATE testdb.Nota set trabalho = 7, prova = 4
+WHERE aluno_id = usuario_pegar_aluno_id('LuanaRocha')
+AND   turma_id = turma_nome_pegar_turma_id('9º ano Português'); 
+
+UPDATE testdb.Nota set trabalho = 3, prova = 9
+WHERE aluno_id = usuario_pegar_aluno_id('LuanaRocha')
+AND   turma_id = turma_nome_pegar_turma_id('9º ano Ciências'); 
+
+UPDATE testdb.Nota set trabalho = 4, prova = 2
+WHERE aluno_id = usuario_pegar_aluno_id('MFerreira')
+AND   turma_id = turma_nome_pegar_turma_id('9º ano Português'); 
+
+UPDATE testdb.Nota set prova = 5
+WHERE aluno_id = usuario_pegar_aluno_id('MFerreira')
+AND   turma_id = turma_nome_pegar_turma_id('9º ano Ciências'); 
+
+UPDATE testdb.Nota set trabalho = 4, prova = 2
+WHERE aluno_id = usuario_pegar_aluno_id('LuizSPinto')
+AND   turma_id = turma_nome_pegar_turma_id('9º ano Português'); 
+
+UPDATE testdb.Nota set trabalho = 3, prova = 5
+WHERE aluno_id = usuario_pegar_aluno_id('LuizSPinto')
+AND   turma_id = turma_nome_pegar_turma_id('9º ano Ciências'); 
+
+UPDATE testdb.Nota set trabalho = 7
+WHERE aluno_id = usuario_pegar_aluno_id('CCrocha')
+AND   turma_id = turma_nome_pegar_turma_id('9º ano Português'); 
+
+UPDATE testdb.Nota set trabalho = 6, prova = 7
+WHERE aluno_id = usuario_pegar_aluno_id('CCrocha')
+AND   turma_id = turma_nome_pegar_turma_id('9º ano Ciências'); 
+
+
+# -- INSERT Tarefa --
+INSERT INTO testdb.Tarefa (titulo, prazo, turma_id) VALUES
+    ('Leia "No Meio do Caminho" e responda às questões do caderno.', 
+     '2022-12-10 23:59:59', 
+     turma_nome_pegar_turma_id('9º ano Português')),
+     
+    ('Leia "Poema de Sete Faces" e responda às questões do caderno.', 
+     '2022-12-16 13:00:00', 
+     turma_nome_pegar_turma_id('9º ano Português')),
+     
+    ('Leia "Módulo - Microrganismos" para ser discutido em sala.', 
+     '2022-12-09 10:00:00', 
+     turma_nome_pegar_turma_id('9º ano Ciências')),
+     
+    ('Leia "Quadrilha" e responda às questões do caderno.', 
+     '2022-12-13 14:00:00', 
+     turma_nome_pegar_turma_id('9º ano Português')),
+     
+    ('Leia "Ciclo da água" para ser discutido em sala.', 
+     '2022-12-12 15:30:00', 
+     turma_nome_pegar_turma_id('9º ano Ciências'));
+
+
+# -- INSERT FAQ --
+INSERT INTO testdb.FAQ (autor_usuario_id, conteudo, turma_id) VALUES
+ (usuario_pegar_aluno_id('LuanaRocha'), 'Como a vida começou?', turma_nome_pegar_turma_id('9º ano Ciências')),
+ (usuario_pegar_aluno_id('MFerreira'), 'Quais são as dez classes gramaticais?', turma_nome_pegar_turma_id('9º ano Português')),
+ (usuario_pegar_aluno_id('LuizSPinto'), 'O que é a consciência?', turma_nome_pegar_turma_id('9º ano Ciências')),
+ (usuario_pegar_aluno_id('CCrocha'), 'Como separar sílabas?', turma_nome_pegar_turma_id('9º ano Português')),
+ (usuario_pegar_aluno_id('CCrocha'), 'Por que sonhamos', turma_nome_pegar_turma_id('9º ano Ciências'));
+
 
 # -- UPDATE Professor -- 
 UPDATE testdb.Professor
 SET disciplina_id = disciplina_nome_pegar_id('Ciências')
 WHERE usuario_id = usuario_pegar_usuario_id('JúlioCosta');
+
 
 # -- DELETE Administrador -- 
 CALL testdb.adicionar_administrador (
@@ -737,12 +803,11 @@ select * from testdb.Usuario;
 
 commit;
 
-# [x] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas. Pelo menos 1;
-# [x] Criar Select para consultar campos que estão em mais de uma tabela, ou seja, com junção de tabelas (usando inner join). Pelo menos 1;
-# [x] Criar views. Pelo menos 2 views abrangendo dados das tabelas com filtragem;
-# [x] Criar procedimento e função. Pelo menos 2 de cada, sendo uma com passagem de parâmetro;
-# [x] Criar um procedimento para inserção de dados usando commit e rollback conforme exemplificado;
-# [ ] Criar pelo menos 1 trigger. (desafio) --> Adcionar nota final na tabela nota automaticamente && Adcionar nota da tarefa automaticamente nas tabelas notas;
-# [ ] Criar pelo menos 1 select que usa um subselect (desafio)
 
-# Ninguém fiscaliza o trabalho individual dos voluntários. Existe a confiança que cada um esteja fazendo o melhor
+
+
+#   [ ] Feedback;
+#   [ ] Calendário;
+#   [ ] Notificação;
+#   [ ] Aluno-Responsável;
+	<-- TABS

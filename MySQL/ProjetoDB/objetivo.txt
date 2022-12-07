@@ -37,8 +37,8 @@ Meu objetivo é construir um Banco de Dados referente ao diagrama de classe
     [x] Aluno-Responsável;
 
 N. More...
-    [ ] Adcionar nota final na tabela nota automaticamente;
-    [ ] Adcionar nota da tarefa automaticamente nas tabelas notas;
+    [x] Adcionar nota final na tabela nota automaticamente;
+    [x] Adcionar nota da tarefa automaticamente nas tabelas notas;
 
 Resquisitos:
     [ ] Documento em que consta o tema do projeto, equipe, objetivo e descrição do minimundo cujo BD está sendo modelado;
@@ -56,12 +56,12 @@ Scripts:
     [x] Criar views. Pelo menos 2 views abrangendo dados das tabelas com filtragem;
     [x] Criar procedimento e função. Pelo menos 2 de cada, sendo uma com passagem de parâmetro;
     [x] Criar um procedimento para inserção de dados usando commit e rollback conforme exemplificado;
-    [ ] Criar pelo menos 1 trigger. (desafio) --> Adcionar nota final na tabela nota automaticamente && Adcionar nota da tarefa automaticamente nas tabelas notas;
-    [ ] Criar pelo menos 1 select que usa um subselect (desafio)
+    [x] Criar pelo menos 1 trigger. (desafio) --> Adcionar nota final na tabela nota automaticamente && Adcionar nota da tarefa automaticamente nas tabelas notas;
+    [x] Criar pelo menos 1 select que usa um subselect (desafio)
 
 Ponto extra:
-    [ ] Pode entregar também o material realizado para a outra disciplina que envolve esse tema de projeto. (conta como pontuação adicional);
-    [ ] Apenas um integrante do grupo realiza a entrega da atividade. (Não esquecer de informar os nomes dos demais integrantes).
+    [x] Pode entregar também o material realizado para a outra disciplina que envolve esse tema de projeto. (conta como pontuação adicional);
+    [x] Apenas um integrante do grupo realiza a entrega da atividade. (Não esquecer de informar os nomes dos demais integrantes).
 
 INSERT:
     [x] Usuário;
