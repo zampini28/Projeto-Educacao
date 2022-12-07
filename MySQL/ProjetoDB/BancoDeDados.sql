@@ -662,6 +662,12 @@ INSERT INTO testdb.FAQ (autor_usuario_id, conteudo, turma_id) VALUES
  (usuario_pegar_aluno_id('CCrocha'), 'Por que sonhamos', turma_nome_pegar_turma_id('9º ano Ciências'));
 
 
+# -- INSERT Feedback --
+INSERT INTO testdb.Feedback (titulo, turma_id) VALUES
+ ('Por favor! Prestem mais atenção na aula.', turma_nome_pegar_turma_id('9º ano Ciências')),
+ ('Legal turma! Absorveram bem os conceitos!', turma_nome_pegar_turma_id('9º ano Português'));
+
+
 # -- UPDATE Professor -- 
 UPDATE testdb.Professor
 SET disciplina_id = disciplina_nome_pegar_id('Ciências')
@@ -804,10 +810,8 @@ select * from testdb.Usuario;
 commit;
 
 
-INSERT INTO testdb.Feedback (titulo, turma_id) VALUES
- ('', turma_nome_pegar_turma_id('9º ano Português'));
 
-#   [ ] Feedback;
+
 #   [ ] Calendário;
 #   [ ] Notificação;
 #   [ ] Aluno-Responsável;
