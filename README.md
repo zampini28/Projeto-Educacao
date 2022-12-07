@@ -13,7 +13,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Caso de uso
 - [x] BPMN
 - [x] Diagrama de classe
-- [ ] Protótipo
+- [x] Protótipo
 
 ## 🤝 Colaboradores
 
