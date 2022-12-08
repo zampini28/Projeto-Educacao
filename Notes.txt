@@ -52,3 +52,6 @@ We’re here for you every step of the way, from planning to training and everyt
 
 Get training and support with anything you need
 Whether you have a specific question, an issue to troubleshoot, or want to learn more about what Google for Education products can do, we’re here to help.
+
+ [ ] Como começar;
+ [ ] Link href;
